@@ -27,12 +27,3 @@ plt.show()
 
 
 
-##	    nodes.append(row['StateCode'])
-#	    G.add_node(row['StateCode'])
-#	    if row['ColA'] != '':
-#	        G.add_edge(row['StateCode'],row['ColA'])
-#	    if row['ColC'] != '':
-#	        G.add_edge(row['StateCode'],row['ColC'])
-#print G.edges()
-# B = bipartite.projected_graph(G, nodes)
-#print B.edges()
