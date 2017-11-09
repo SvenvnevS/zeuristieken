@@ -18,27 +18,27 @@
 
 ## TODO:
 Begin:
-- # Oekraine
+- # Украина(Oekraine)
     ```diff
-    + Csv met aangenzende proviencies
+    + Csv met aangrenzende proviencies
     - Csv met Geotags om het plotten op de map te laten lijken
     ```
 
 - # USA
     ```diff
-    + Csv met aangenzende proviencies
+    + Csv met aangrenzende proviencies
     - Csv met Geotags om het plotten op de map te laten lijken
     ```
 
-- # 中国(China)
+- # Китай（中国）
     ```diff
-    - Csv met aangenzende proviencies
+    - Csv met aangrenzende proviencies
     - Csv met Geotags om het plotten op de map te laten lijken
     ```
 
 - # Русланд (Rusland)
     ```diff
-    - Csv met aangenzende proviencies
+    - Csv met aangrenzende proviencies
     - Csv met Geotags om het plotten op de map te laten lijken
     ```
 
