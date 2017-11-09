@@ -1,7 +1,8 @@
 # эвристика (Heuristieken)
 
 
-# Radio russia
+# [Radio Russia](http://heuristieken.nl/wiki/index.php?title=Radio_Russia)
+
 
 
 ![alt text](http://www.cnclabs.com/redalert2/images/sovietlogo_small.jpg)
