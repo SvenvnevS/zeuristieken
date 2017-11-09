@@ -42,9 +42,9 @@ Begin:
     ```
 
 + Pyhton
-Done
-Begin gemaakt om met csv inport bestanden om hier een Graphplot van te maken
-TODO
-ALLes
+    -Done
+        -Begin gemaakt om met csv inport bestanden om hier een Graphplot van te maken
+    -TODO
+        -ALLes
 
 
