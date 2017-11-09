@@ -20,26 +20,26 @@
 Begin:
 - # Украина(Oekraine)
     ```diff
-    + Csv met aangrenzende proviencies
-    - Csv met Geotags om het plotten op de map te laten lijken
+    + CSV met aangrenzende proviencies
+    - CSV met Geotags om het plotten op de map te laten lijken
     ```
 
 - # Соединенные Штаты Америки (USA)
     ```diff
-    + Csv met aangrenzende proviencies
-    - Csv met Geotags om het plotten op de map te laten lijken
+    + CSV met aangrenzende proviencies
+    - CSV met Geotags om het plotten op de map te laten lijken
     ```
 
 - # Китай（中国）
     ```diff
-    - Csv met aangrenzende proviencies
-    - Csv met Geotags om het plotten op de map te laten lijken
+    - CSV met aangrenzende proviencies
+    - CSV met Geotags om het plotten op de map te laten lijken
     ```
 
 - # Русланд (Rusland)
     ```diff
-    - Csv met aangrenzende proviencies
-    - Csv met Geotags om het plotten op de map te laten lijken
+    - CSV met aangrenzende proviencies
+    - CSV met Geotags om het plotten op de map te laten lijken
     ```
 
 + Pyhton
