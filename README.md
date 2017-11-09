@@ -24,7 +24,7 @@ Begin:
     - Csv met Geotags om het plotten op de map te laten lijken
     ```
 
-- # USA
+- # Соединенные Штаты Америки (USA)
     ```diff
     + Csv met aangrenzende proviencies
     - Csv met Geotags om het plotten op de map te laten lijken
