@@ -30,7 +30,7 @@ Begin:
     - Csv met Geotags om het plotten op de map te laten lijken
     ```
 
-- # Китай(China)
+- # 中国(China)
     ```diff
     - Csv met aangenzende proviencies
     - Csv met Geotags om het plotten op de map te laten lijken
