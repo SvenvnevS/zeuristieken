@@ -1,7 +1,7 @@
-# эвристика (Heuristieken)
+# [эвристика (Heuristieken)](http://heuristieken.nl/wiki/index.php?title=Radio_Russia)
 
 
-# [Radio Russia](http://heuristieken.nl/wiki/index.php?title=Radio_Russia)
+# [Radio Russia](https://www.youtube.com/watch?v=U06jlgpMtQs)
 
 
 
@@ -18,28 +18,28 @@
 
 ## TODO:
 Begin:
-- # Oekraine
+- # Украина(Oekraine)
     ```diff
-    - Csv met aangenzende proviencies
-    - Csv met Geotags om het plotten op de map te laten lijken
+    + CSV met aangrenzende proviencies
+    - CSV met Geotags om het plotten op de map te laten lijken
     ```
 
-- # USA
+- # Соединенные Штаты Америки (USA)
     ```diff
-    + Csv met aangenzende proviencies
-    - Csv met Geotags om het plotten op de map te laten lijken
+    + CSV met aangrenzende proviencies
+    - CSV met Geotags om het plotten op de map te laten lijken
     ```
 
-- # Китай(China)
+- # Китай（中国）
     ```diff
-    - Csv met aangenzende proviencies
-    - Csv met Geotags om het plotten op de map te laten lijken
+    - CSV met aangrenzende proviencies
+    - CSV met Geotags om het plotten op de map te laten lijken
     ```
 
 - # Русланд (Rusland)
     ```diff
-    - Csv met aangenzende proviencies
-    - Csv met Geotags om het plotten op de map te laten lijken
+    - CSV met aangrenzende proviencies
+    - CSV met Geotags om het plotten op de map te laten lijken
     ```
 
 + Pyhton
