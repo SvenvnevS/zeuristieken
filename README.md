@@ -1,7 +1,7 @@
-# эвристика (Heuristieken)
+# эвристика (Heuristieken)(http://heuristieken.nl/wiki/index.php?title=Radio_Russia)
 
 
-# [Radio Russia](http://heuristieken.nl/wiki/index.php?title=Radio_Russia)
+# [Radio Russia](https://www.youtube.com/watch?v=U06jlgpMtQs)
 
 
 
