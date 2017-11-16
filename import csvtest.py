@@ -25,12 +25,27 @@ def main():
 	for node in G.nodes():
 		createColor(G, node, controleColor(G, node))
 
-	score=0
+
 	colormap = []
-	print(nx.info(G))
 	for node in G.nodes():
 		color=nx.get_node_attributes(G,'color')
-		colormap.append(color[node])		
+		colormap.append(color[node])
+
+	tScore=scoreCounter1(G, colormap)
+
+	print(nx.info(G))
+
+	print("score is: {}".format(tScore))
+
+	nx.draw_networkx(G, with_labels=True,node_color=colormap)
+
+	plt.show()
+# end of main
+
+
+# telt totaal score gebaseerd op kosten tabel 1
+def scoreCounter1(G, colormap):
+	score = 0
 	for kleur in colormap:
 		if kleur == 'red':
 			score += 12
@@ -46,12 +61,7 @@ def main():
 			score += 39
 		if kleur == 'grey':
 			score += 41
-	print("score is: {}".format(score))
-
-
-	nx.draw_networkx(G, with_labels=True,node_color=colormap)
-
-	plt.show()
+	return score
 
 #gaat een lijst bouwen van toegestane kleuren van de node
 def controleColor(G, province):
