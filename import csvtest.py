@@ -72,20 +72,20 @@ def controleColor(G, province):
 	if 'grey' not in kleuren:
 		colorsAvailable.append('grey')
 	if 'red' not in kleuren:
-		colorsAvailable.append("red")
+		colorsAvailable.append('red')
 	if 'green' not in kleuren:
-		colorsAvailable.append("green")
+		colorsAvailable.append('green')
 	if 'blue' not in kleuren:
-		colorsAvailable.append("blue")
+		colorsAvailable.append('blue')
 	if 'yellow' not in kleuren:
-		colorsAvailable.append("yellow")
+		colorsAvailable.append('yellow')
 	if 'orange' not in kleuren:
-		colorsAvailable.append("orange")
+		colorsAvailable.append('orange')
 	if 'purple' not in kleuren:
-		colorsAvailable.append("purple")
+		colorsAvailable.append('purple')
 	return colorsAvailable
 
-#geeft nu random kleuren, maar moet later random.choice uit de lijst van de functio controleColor() geven
+#geeft nu random kleur uit de lijst colorsAvailable
 def createColor(G, node, colorsAvailable):
 	G.nodes[node]['color'] = random.choice(colorsAvailable)
 
