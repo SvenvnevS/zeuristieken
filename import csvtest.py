@@ -59,8 +59,6 @@ def controleColor(G, province):
 	colorsAvailable = []
 	neighbors = G[province]
 	for jemoeder in neighbors:
-	 	# print(jemoeder)
-	 	print(G.node[jemoeder])
 	 	colr=nx.get_node_attributes(G,'color')
 	 	kleuren += (colr[jemoeder])
 	if 'grey' not in kleuren:
