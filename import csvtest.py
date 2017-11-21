@@ -46,6 +46,29 @@ def main():
 # telt totaal score gebaseerd op kosten tabel 1
 def scoreCounter1(G, colormap):
 	score = 0
+	red = 0
+	green = 0
+	blue = 0
+	yellow = 0
+	orange = 0
+	purple = 0
+	grey = 0
+
+	for kleur in colormap:
+		if kleur == 'red':
+			red+=1
+		if kleur == 'green':
+			green+=1
+		if kleur == 'blue':
+			blue+=1
+		if kleur == 'yellow':
+			yellow+=1
+		if kleur == 'orange':
+			orange+=1
+		if kleur == 'purple':
+			purple+=1
+		if kleur == 'grey':
+			grey+=1
 	for kleur in colormap:
 		if kleur == 'red':
 			score += 12
@@ -61,6 +84,17 @@ def scoreCounter1(G, colormap):
 			score += 39
 		if kleur == 'grey':
 			score += 41
+	kleuren = []
+	kleuren.append(red)
+	kleuren.append(green)
+	kleuren.append(blue)
+	kleuren.append(yellow)
+	kleuren.append(orange)
+	kleuren.append(purple)
+	kleuren.append(grey)
+	print(kleuren)
+	bubbleSort(kleuren)
+	print(kleuren)
 	return score
 
 #gaat een lijst bouwen van toegestane kleuren van de node
@@ -86,6 +120,15 @@ def controleColor(G, province):
 	if 'purple' not in kleuren:
 		colorsAvailable.append('purple')
 	return colorsAvailable
+
+# copied from http://interactivepython.org/runestone/static/pythonds/SortSearch/TheBubbleSort.html
+def bubbleSort(alist):
+    for passnum in range(len(alist)-1,0,-1):
+        for i in range(passnum):
+            if alist[i]<alist[i+1]:
+                temp = alist[i]
+                alist[i] = alist[i+1]
+                alist[i+1] = temp
 
 #geeft nu random kleur uit de lijst colorsAvailable
 def createColor(G, node, colorsAvailable):
