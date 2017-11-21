@@ -3,7 +3,10 @@ import io
 import networkx as nx
 import matplotlib.pyplot as plt
 import random
+import xlwt
+import xlrd
 from networkx.algorithms import bipartite
+
 
 def main():
 
@@ -21,6 +24,15 @@ def main():
 		plots = csv.reader(csvfile, delimiter=',')	
 		for row in plots:
 			G.add_edge(str(row[0]),str(row[1]))
+
+	# lees de oude score uit file
+	
+	book = xlrd.open_workbook("score.xls")
+	sh = book.sheet_by_index(0)
+	last_score = sh.cell_value(rowx = 0, colx = 0)
+	print(last_score)
+
+
 		
 	for node in G.nodes():
 		# voeg kleur aan een node toe die de buren nog niet hebben
@@ -42,6 +54,19 @@ def main():
 	print(nx.info(G))
 
 	print("score is: {}".format(tScore))
+
+
+	if last_score > tScore:
+
+		
+		# open worksheet
+		wb = xlwt.Workbook()
+		# add sheet
+		ws = wb.add_sheet("A Test Sheet")
+
+		# write in cel 0 , 0
+		ws.write(0,0, tScore)
+		wb.save("score.xls")
 
 	# teken de map
 	# nx.draw_networkx(G, with_labels=True,node_color=colormap)
@@ -88,8 +113,7 @@ def controleColor(G, province):
 
 	 	# vraag de kleuren op van de buren van een provincie
 	 	kleuren += (colr[neighbor])
-	 	print(kleuren)
-
+	 	
 	if 'grey' not in kleuren:
 		colorsAvailable.append('grey')
 	if 'red' not in kleuren:
@@ -111,6 +135,7 @@ def createColor(G, node, colorsAvailable):
 
 	# kleur een node in van een specifieke kleur
 	G.nodes[node]['color'] = random.choice(colorsAvailable)
+
 
 if __name__ == '__main__':
 	main()
