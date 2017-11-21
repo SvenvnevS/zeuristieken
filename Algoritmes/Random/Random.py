@@ -10,69 +10,72 @@ from networkx.algorithms import bipartite
 
 def main():
 
-	G = nx.Graph()
 
-	# nodes neerzetten per provincie
-	with open('nodes.csv', 'r') as csvfile:
-		plots = csv.reader(csvfile, delimiter=',')	
-		for row in plots:
-			G.add_node(str(row[0]),color='None')
+	for kipsate in range(10000):
+		G = nx.Graph()
 
-
-	# lijnen tussen staten
-	with open('edges.csv', 'r') as csvfile:
-		plots = csv.reader(csvfile, delimiter=',')	
-		for row in plots:
-			G.add_edge(str(row[0]),str(row[1]))
-
-	# lees de oude score uit file
-	
-	book = xlrd.open_workbook("score.xls")
-	sh = book.sheet_by_index(0)
-	last_score = sh.cell_value(rowx = 0, colx = 0)
-	print(last_score)
+		# nodes neerzetten per provincie
+		with open('nodes.csv', 'r') as csvfile:
+			plots = csv.reader(csvfile, delimiter=',')	
+			for row in plots:
+				G.add_node(str(row[0]),color='None')
 
 
+		# lijnen tussen staten
+		with open('edges.csv', 'r') as csvfile:
+			plots = csv.reader(csvfile, delimiter=',')	
+			for row in plots:
+				G.add_edge(str(row[0]),str(row[1]))
+
+		# lees de oude score uit file
 		
-	for node in G.nodes():
-		# voeg kleur aan een node toe die de buren nog niet hebben
-		createColor(G, node, controleColor(G, node))
+		book = xlrd.open_workbook("score.xls")
+		sh = book.sheet_by_index(0)
+		last_score = sh.cell_value(rowx = 0, colx = 0)
+		# print(last_score)
 
 
-	colormap = []
-	for node in G.nodes():
-
-		# vraag de kleur op van een specifieke node
-		color = nx.get_node_attributes(G,'color')
-
-		# voeg de kleur toe in de array
-		colormap.append(color[node])
-
-	# bereken de score
-	tScore = scoreCounter1(G, colormap)
-
-	print(nx.info(G))
-
-	print("score is: {}".format(tScore))
+			
+		for node in G.nodes():
+			# voeg kleur aan een node toe die de buren nog niet hebben
+			createColor(G, node, controleColor(G, node))
 
 
-	if last_score > tScore:
+		colormap = []
+		for node in G.nodes():
 
-		
-		# open worksheet
-		wb = xlwt.Workbook()
-		# add sheet
-		ws = wb.add_sheet("A Test Sheet")
+			# vraag de kleur op van een specifieke node
+			color = nx.get_node_attributes(G,'color')
 
-		# write in cel 0 , 0
-		ws.write(0,0, tScore)
-		wb.save("score.xls")
+			# voeg de kleur toe in de array
+			colormap.append(color[node])
 
-	# teken de map
-	# nx.draw_networkx(G, with_labels=True,node_color=colormap)
+		# bereken de score
+		tScore = scoreCounter1(G, colormap)
 
-	plt.show()
-# end of main
+		# print(nx.info(G))
+
+		# print("score is: {}".format(tScore))
+
+
+		if last_score > tScore:
+
+			
+			# open worksheet
+			wb = xlwt.Workbook()
+			# add sheet
+			ws = wb.add_sheet("A Test Sheet")
+
+			# write in cel 0 , 0
+			ws.write(0,0, tScore)
+			wb.save("score.xls")
+
+		# teken de map
+		# nx.draw_networkx(G, with_labels=True,node_color=colormap)
+
+		# plt.show()
+	# end of main
+		print(kipsate)
 
 
 # telt totaal score gebaseerd op kosten tabel 1
@@ -113,9 +116,9 @@ def scoreCounter1(G, colormap):
 	kleuren.append(orange)
 	kleuren.append(purple)
 	kleuren.append(grey)
-	print(kleuren)
+	# print(kleuren)
 	bubbleSort(kleuren)
-	print(kleuren)
+	# print(kleuren)
 	score += kleuren[0]*12
 	score += kleuren[1]*26
 	score += kleuren[2]*27
@@ -171,9 +174,12 @@ def bubbleSort(alist):
 
 # geeft nu random kleur uit de lijst colorsAvailable
 def createColor(G, node, colorsAvailable):
-	if colorsAvailable is not None:
+
+	# als er kleuren beschibkaar zijn, voeg een kleur toe
+	if colorsAvailable != []:
 		# kleur een node in van een specifieke kleur
 		G.nodes[node]['color'] = random.choice(colorsAvailable)
+	# als er geen kleur beschikbaar is, maak de node zwart
 	else:
 		G.nodes[node]['color'] = "black"
 
