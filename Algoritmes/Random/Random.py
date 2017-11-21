@@ -102,7 +102,8 @@ def scoreCounter1(G, colormap):
 		if kleur == 'grey':
 			grey+=1
 		if kleur == 'black':
-			return score = 66666
+			score=6666666
+			return score
 
 	kleuren = []
 	kleuren.append(red)
@@ -170,10 +171,10 @@ def bubbleSort(alist):
 
 # geeft nu random kleur uit de lijst colorsAvailable
 def createColor(G, node, colorsAvailable):
-	if colorsAvailable is not None
+	if colorsAvailable is not None:
 		# kleur een node in van een specifieke kleur
 		G.nodes[node]['color'] = random.choice(colorsAvailable)
-	else 
+	else:
 		G.nodes[node]['color'] = "black"
 
 
