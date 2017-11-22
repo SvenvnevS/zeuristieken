@@ -42,12 +42,13 @@ Begin:
     - CSV met Geotags om het plotten op de map te laten lijken
     ```
 
-+ Pyhton
-    -Done
-        -Begin gemaakt om met csv inport bestanden om hier een Graphplot van te maken
-        -Scores exporteren
-        -node kleuren exporteren
-    -TODO
-        -score functie optimalizeren(hij telt en sorteerd alle kleuren 4 keer per run, maar 1 keer nodig)
-
+- # Pyhton
+    ```diff
+    + Done
+        + Begin gemaakt om met csv inport bestanden om hier een Graphplot van te maken
+        + Scores exporteren
+        + node kleuren exporteren
+    - TODO
+        - score functie optimalizeren(hij telt en sorteerd alle kleuren 4 keer per run, maar 1 keer nodig)
+    ```
 
