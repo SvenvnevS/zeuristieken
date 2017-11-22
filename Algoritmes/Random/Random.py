@@ -11,7 +11,7 @@ from networkx.algorithms import bipartite
 def main():
 
 
-	for kipsate in range(10000):
+	for kipsate in range(1000):
 		G = nx.Graph()
 
 		# nodes neerzetten per provincie
@@ -29,10 +29,18 @@ def main():
 
 		# lees de oude score uit file
 		
-		book = xlrd.open_workbook("score.xls")
+		book = xlrd.open_workbook("score1.xls")
 		sh = book.sheet_by_index(0)
-		last_score = sh.cell_value(rowx = 0, colx = 0)
-		# print(last_score)
+		last_score1 = sh.cell_value(rowx = 0, colx = 0)
+		book = xlrd.open_workbook("score2.xls")
+		sh = book.sheet_by_index(0)
+		last_score2 = sh.cell_value(rowx = 0, colx = 0)
+		book = xlrd.open_workbook("score3.xls")
+		sh = book.sheet_by_index(0)
+		last_score3 = sh.cell_value(rowx = 0, colx = 0)
+		book = xlrd.open_workbook("score4.xls")
+		sh = book.sheet_by_index(0)
+		last_score4 = sh.cell_value(rowx = 0, colx = 0)
 
 
 			
@@ -42,33 +50,93 @@ def main():
 
 
 		colormap = []
+
+		# vraag de kleur op van een specifieke node
+		color = nx.get_node_attributes(G,'color')
 		for node in G.nodes():
 
-			# vraag de kleur op van een specifieke node
-			color = nx.get_node_attributes(G,'color')
 
 			# voeg de kleur toe in de array
 			colormap.append(color[node])
 
 		# bereken de score
-		tScore = scoreCounter1(G, colormap)
+		tScore1 = scoreCounter1(G, colormap)
+		tScore2 = scoreCounter2(G, colormap)
+		tScore3 = scoreCounter3(G, colormap)
+		tScore4 = scoreCounter4(G, colormap)
 
 		# print(nx.info(G))
 
 		# print("score is: {}".format(tScore))
 
 
-		if last_score > tScore:
+		if last_score1 > tScore1:
 
 			
 			# open worksheet
 			wb = xlwt.Workbook()
 			# add sheet
-			ws = wb.add_sheet("A Test Sheet")
+			ws = wb.add_sheet("Scores")
 
+			n = 1
+			for node in G.nodes():
+				ws.write(n,0, node)
+				ws.write(n,1, color[node])
+				n+=1
 			# write in cel 0 , 0
-			ws.write(0,0, tScore)
-			wb.save("score.xls")
+			ws.write(0,0, tScore1)
+			wb.save("score1.xls")
+
+		if last_score2 > tScore2:
+
+			
+			# open worksheet
+			wb = xlwt.Workbook()
+			# add sheet
+			ws = wb.add_sheet("Scores")
+
+			n = 1
+			for node in G.nodes():
+				ws.write(n,0, node)
+				ws.write(n,1, color[node])
+				n+=1
+			# write in cel 0 , 0
+			ws.write(0,0, tScore2)
+			wb.save("score2.xls")
+
+		if last_score3 > tScore3:
+
+			
+			# open worksheet
+			wb = xlwt.Workbook()
+			# add sheet
+			ws = wb.add_sheet("Scores")
+
+			n = 1
+			for node in G.nodes():
+				ws.write(n,0, node)
+				ws.write(n,1, color[node])
+				n+=1
+			# write in cel 0 , 0
+			ws.write(0,0, tScore3)
+			wb.save("score3.xls")
+
+		if last_score4 > tScore4:
+
+			
+			# open worksheet
+			wb = xlwt.Workbook()
+			# add sheet
+			ws = wb.add_sheet("Scores")
+
+			n = 1
+			for node in G.nodes():
+				ws.write(n,0, node)
+				ws.write(n,1, color[node])
+				n+=1
+			# write in cel 0 , 0
+			ws.write(0,0, tScore4)
+			wb.save("score4.xls")
 
 		# teken de map
 		# nx.draw_networkx(G, with_labels=True,node_color=colormap)
@@ -126,6 +194,153 @@ def scoreCounter1(G, colormap):
 	score += kleuren[4]*37
 	score += kleuren[5]*39
 	score += kleuren[6]*41
+	return score
+
+def scoreCounter2(G, colormap):
+	score = 0
+	red = 0
+	green = 0
+	blue = 0
+	yellow = 0
+	orange = 0
+	purple = 0
+	grey = 0
+
+	for kleur in colormap:
+		if kleur == 'red':
+			red+=1
+		if kleur == 'green':
+			green+=1
+		if kleur == 'blue':
+			blue+=1
+		if kleur == 'yellow':
+			yellow+=1
+		if kleur == 'orange':
+			orange+=1
+		if kleur == 'purple':
+			purple+=1
+		if kleur == 'grey':
+			grey+=1
+		if kleur == 'black':
+			score=6666666
+			return score
+
+	kleuren = []
+	kleuren.append(red)
+	kleuren.append(green)
+	kleuren.append(blue)
+	kleuren.append(yellow)
+	kleuren.append(orange)
+	kleuren.append(purple)
+	kleuren.append(grey)
+	# print(kleuren)
+	bubbleSort(kleuren)
+	# print(kleuren)
+	score += kleuren[0]*19
+	score += kleuren[1]*20
+	score += kleuren[2]*21
+	score += kleuren[3]*23
+	score += kleuren[4]*36
+	score += kleuren[5]*37
+	score += kleuren[6]*38
+	return score
+
+def scoreCounter3(G, colormap):
+	score = 0
+	red = 0
+	green = 0
+	blue = 0
+	yellow = 0
+	orange = 0
+	purple = 0
+	grey = 0
+
+	for kleur in colormap:
+		if kleur == 'red':
+			red+=1
+		if kleur == 'green':
+			green+=1
+		if kleur == 'blue':
+			blue+=1
+		if kleur == 'yellow':
+			yellow+=1
+		if kleur == 'orange':
+			orange+=1
+		if kleur == 'purple':
+			purple+=1
+		if kleur == 'grey':
+			grey+=1
+		if kleur == 'black':
+			score=6666666
+			return score
+
+	kleuren = []
+	kleuren.append(red)
+	kleuren.append(green)
+	kleuren.append(blue)
+	kleuren.append(yellow)
+	kleuren.append(orange)
+	kleuren.append(purple)
+	kleuren.append(grey)
+	# print(kleuren)
+	bubbleSort(kleuren)
+	# print(kleuren)
+	score += kleuren[0]*16
+	score += kleuren[1]*17
+	score += kleuren[2]*31
+	score += kleuren[3]*33
+	score += kleuren[4]*36
+	score += kleuren[5]*56
+	score += kleuren[6]*57
+	return score
+
+def scoreCounter4(G, colormap):
+	score = 0
+	red = 0
+	green = 0
+	blue = 0
+	yellow = 0
+	orange = 0
+	purple = 0
+	grey = 0
+
+	for kleur in colormap:
+		if kleur == 'red':
+			red+=1
+		if kleur == 'green':
+			green+=1
+		if kleur == 'blue':
+			blue+=1
+		if kleur == 'yellow':
+			yellow+=1
+		if kleur == 'orange':
+			orange+=1
+		if kleur == 'purple':
+			purple+=1
+		if kleur == 'grey':
+			grey+=1
+		if kleur == 'black':
+			score=6666666
+			return score
+
+	kleuren = []
+	kleuren.append(red)
+	kleuren.append(green)
+	kleuren.append(blue)
+	kleuren.append(yellow)
+	kleuren.append(orange)
+	kleuren.append(purple)
+	kleuren.append(grey)
+	# print(kleuren)
+	bubbleSort(kleuren)
+	# print(kleuren)
+	score += kleuren[0]*3
+	score += kleuren[1]*34
+	score += kleuren[2]*36
+	score += kleuren[3]*39
+	score += kleuren[4]*41
+	score += kleuren[5]*43
+	score += kleuren[6]*58
 	return score
 
 #gaat een lijst bouwen van toegestane kleuren van de node
