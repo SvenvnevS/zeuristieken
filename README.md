@@ -45,7 +45,9 @@ Begin:
 + Pyhton
     -Done
         -Begin gemaakt om met csv inport bestanden om hier een Graphplot van te maken
+        -Scores exporteren
+        -node kleuren exporteren
     -TODO
-        -ALLes
+        -score functie optimalizeren(hij telt en sorteerd alle kleuren 4 keer per run, maar 1 keer nodig)
 
 
