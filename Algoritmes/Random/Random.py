@@ -1,4 +1,5 @@
 import csv
+import sys
 import io
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -10,7 +11,8 @@ from networkx.algorithms import bipartite
 
 def main():
 
-
+if sys.version_info[0] < 3:
+    raise Exception("Python 3 or a more recent version is required.")
 	for kipsate in range(100000):
 		G = nx.Graph()
 
