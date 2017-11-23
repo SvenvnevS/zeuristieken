@@ -11,7 +11,7 @@ from networkx.algorithms import bipartite
 def main():
 
 
-	for kipsate in range(1000):
+	for kipsate in range(100000):
 		G = nx.Graph()
 
 		# nodes neerzetten per provincie
