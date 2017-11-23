@@ -32,9 +32,9 @@ def main():
 	# lees de oude score uit file
 	
 	colormap = []
-	book = xlrd.open_workbook("score2.xls")
+	book = xlrd.open_workbook("kipsate.xls")
 	sh = book.sheet_by_index(0)
-	last_score1 = sh.cell_value(rowx = 0, colx = 0)
+	best_score = sh.cell_value(rowx = 0, colx = 0)
 	for rows in sh.col(1):
 		colormap.append(rows.value)
 	del colormap[0]
@@ -50,9 +50,9 @@ def main():
 	# 	colormap.append(color[node])
 
 
-	print(nx.info(G))
 
-
+	# print(nx.info(G))
+	print(best_score)
 
 
 # geeft nu random kleur uit de lijst colorsAvailable
@@ -61,6 +61,8 @@ def main():
 	nx.draw_networkx(G, with_labels=True,node_color=colormap)
 
 	plt.show()
+
+
 
 if __name__ == '__main__':
 	main()
