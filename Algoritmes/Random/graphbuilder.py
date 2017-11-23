@@ -1,7 +1,7 @@
 '''
 This program can take the layouts stored in score excel files and builds the color+node layout from them
 '''
-
+import sys
 import csv
 import io
 import networkx as nx
@@ -32,7 +32,8 @@ def main():
 	# lees de oude score uit file
 	
 	colormap = []
-	book = xlrd.open_workbook("kipsate.xls")
+	text = input("welke excel? score1.xls t/m score4.xls")
+	book = xlrd.open_workbook(text)
 	sh = book.sheet_by_index(0)
 	best_score = sh.cell_value(rowx = 0, colx = 0)
 	for rows in sh.col(1):
