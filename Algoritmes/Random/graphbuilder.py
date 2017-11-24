@@ -14,9 +14,6 @@ from networkx.algorithms import bipartite
 
 
 def main():
-if sys.version_info[0] < 3:
-    raise Exception("Python 3 or a more recent version is required.")
-
 	G = nx.Graph()
 	# nodes neerzetten per provincie
 	with open('nodes.csv', 'r') as csvfile:
