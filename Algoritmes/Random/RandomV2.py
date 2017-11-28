@@ -7,13 +7,19 @@ import random
 import xlwt
 import xlrd
 from networkx.algorithms import bipartite
+import numpy as np 
+
 
 
 def main():
+	score_1 = []
+	score_2 = []
+	score_3 = []
+	score_4 = []
 
 	# if sys.version_info[0] < 3:
  #   		raise Exception("Python 3 or a more recent version is required.")
-	for kipsate in range(1000):
+ 	for kipsate in range(1):
 		G = nx.Graph()
 
 		# nodes neerzetten per provincie
@@ -21,7 +27,7 @@ def main():
 			plots = csv.reader(csvfile, delimiter=',')	
 			for row in plots:
 				G.add_node(str(row[0]),color='None')
-				# all_nodes = G.add_node(str(row[0]),color='None')
+				
 
 
 		# lijnen tussen staten
@@ -46,14 +52,12 @@ def main():
 		last_score4 = sh.cell_value(rowx = 0, colx = 0)
 
 
-	
-		
-
 		list_nodes = random_node_list(G)
 
 		# print(list_nodes)
 
 		for node in list_nodes:
+			# print (node)
 
 			# voeg kleur aan een node toe die de buren nog niet hebben
 			createColor(G, node, controleColor(G, node))
@@ -75,6 +79,11 @@ def main():
 		tScore3 = scoreCounter3(G, colormap)
 		tScore4 = scoreCounter4(G, colormap)
 
+		#  voeg score toe aan array
+		score_1.append(tScore1)
+		score_2.append(tScore2)
+		score_3.append(tScore3)
+		score_4.append(tScore4)
 		
 
 		# print(nx.info(G))
@@ -146,18 +155,35 @@ def main():
 			n = 1
 			for node in G.nodes():
 				ws.write(n,0, node)
-				ws.write(n,1, color[node])
+				ws.write(n,1, colormap[n-1])
 				n+=1
 			# write in cel 0 , 0
 			ws.write(0,0, tScore4)
 			wb.save("score4.xls")
 
 		# teken de map
-		# nx.draw_networkx(G, with_labels=True,node_color=colormap)
+		nx.draw_networkx(G, with_labels=True,node_color=colormap)
 
-		# plt.show()
+		plt.show()
 	# end of main
 		print(kipsate)
+
+
+	n = 0
+	wb = xlwt.Workbook()
+		# add sheet
+	ws = wb.add_sheet("Scores")
+
+	for score in range(len(score_1)):
+
+		ws.write(n,0, score_1[score])
+		ws.write(n,1, score_2[score])
+		ws.write(n,2, score_3[score])
+		ws.write(n,3, score_4[score])
+		n+=1
+
+
+	wb.save("totalscore.xls")
 
 
 # telt totaal score gebaseerd op kosten tabel 1
@@ -368,14 +394,18 @@ def controleColor(G, province):
 	# van 1 node worden van alle buurprovincies opgevraagd
 	neighbors = G[province]	
 
+
 	for neighbor in neighbors:
 
 		# vraag per provincie de huidige kleur op
 	 	colr=nx.get_node_attributes(G,'color')
 
 
+
 	 	# vraag de kleuren op van de buren van een provincie
 	 	kleuren += (colr[neighbor])
+
+	 	# print(kleuren)
 	 	
 	if 'grey' not in kleuren:
 		colorsAvailable.append('grey')
@@ -391,6 +421,8 @@ def controleColor(G, province):
 		colorsAvailable.append('orange')
 	if 'purple' not in kleuren:
 		colorsAvailable.append('purple')
+
+	print(colorsAvailable)
 	return colorsAvailable
 
 # copied from http://interactivepython.org/runestone/static/pythonds/SortSearch/TheBubbleSort.html
@@ -426,7 +458,7 @@ def random_node_list(G):
 		rannie = random.choice(list_1)
 		list_2.append(rannie)
 		list_1.remove(rannie)
-
+	print(list_2)
 	return(list_2)
 
 
