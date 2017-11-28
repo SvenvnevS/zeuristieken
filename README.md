@@ -36,7 +36,7 @@ Begin:
     - CSV met Geotags om het plotten op de map te laten lijken
     ```
 
-- # [Русланд (Rusland)]((https://github.com/SvenvBoven/zeuristieken/tree/master/Rusland)
+- # [Русланд (Rusland)](https://github.com/SvenvBoven/zeuristieken/tree/master/Rusland)
     ```diff
     - CSV met aangrenzende proviencies
     - CSV met Geotags om het plotten op de map te laten lijken
