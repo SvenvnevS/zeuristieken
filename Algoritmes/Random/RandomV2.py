@@ -13,7 +13,7 @@ def main():
 
 	# if sys.version_info[0] < 3:
  #   		raise Exception("Python 3 or a more recent version is required.")
-	for kipsate in range(1):
+	for kipsate in range(1000):
 		G = nx.Graph()
 
 		# nodes neerzetten per provincie
@@ -51,7 +51,7 @@ def main():
 
 		list_nodes = random_node_list(G)
 
-		print(list_nodes)
+		# print(list_nodes)
 
 		for node in list_nodes:
 
@@ -77,7 +77,7 @@ def main():
 
 		
 
-		print(nx.info(G))
+		# print(nx.info(G))
 
 		# print("score is: {}".format(tScore))
 
@@ -153,9 +153,9 @@ def main():
 			wb.save("score4.xls")
 
 		# teken de map
-		nx.draw_networkx(G, with_labels=True,node_color=colormap)
+		# nx.draw_networkx(G, with_labels=True,node_color=colormap)
 
-		plt.show()
+		# plt.show()
 	# end of main
 		print(kipsate)
 
