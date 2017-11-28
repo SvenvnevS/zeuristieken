@@ -18,7 +18,7 @@
 
 ## TODO:
 Begin:
-- # [Украина(Oekraine)](https://github.com/SvenvBoven/zeuristieken/tree/master/Oekraine)
+- # [Украина(UKRAINE)](https://github.com/SvenvBoven/zeuristieken/tree/master/UKRAINE)
     ```diff
     + CSV met aangrenzende proviencies
     - CSV met Geotags om het plotten op de map te laten lijken
