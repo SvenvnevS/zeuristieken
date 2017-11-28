@@ -12,9 +12,8 @@ import xlrd
 from networkx.algorithms import bipartite
 
 
+
 def main():
-
-
 	G = nx.Graph()
 	# nodes neerzetten per provincie
 	with open('nodes.csv', 'r') as csvfile:
@@ -32,7 +31,7 @@ def main():
 	# lees de oude score uit file
 	
 	colormap = []
-	text = input("welke excel? score1.xls t/m score4.xls")
+	text = input("welke excel? score1.xls t/m score4.xls ")
 	book = xlrd.open_workbook(text)
 	sh = book.sheet_by_index(0)
 	best_score = sh.cell_value(rowx = 0, colx = 0)
@@ -60,7 +59,7 @@ def main():
 
 
 	nx.draw_networkx(G, with_labels=True,node_color=colormap)
-
+	plt.title(text)
 	plt.show()
 
 
