@@ -1,11 +1,11 @@
-# [эвристика (Heuristieken)](http://heuristieken.nl/wiki/index.php?title=Radio_Russia)
+﻿# [эвристика (Heuristieken)](http://heuristieken.nl/wiki/index.php?title=Radio_Russia)
 
 
 # [Radio Russia](https://www.youtube.com/watch?v=U06jlgpMtQs)
 
 
 
-![alt text](http://www.cnclabs.com/redalert2/images/sovietlogo_small.jpg)
+![SovietLogo](http://www.cnclabs.com/redalert2/images/sovietlogo_small.jpg)
 # Team : ForMotherRussia
 
 # товарищ
@@ -18,25 +18,25 @@
 
 ## TODO:
 Begin:
-- # Украина(Oekraine)
+- # [Украина(Oekraine)](https://github.com/SvenvBoven/zeuristieken/tree/master/Oekraine)
     ```diff
     + CSV met aangrenzende proviencies
     - CSV met Geotags om het plotten op de map te laten lijken
     ```
 
-- # Соединенные Штаты Америки (USA)
+- # [Соединенные Штаты Америки (USA)](https://github.com/SvenvBoven/zeuristieken/tree/master/USA)
     ```diff
     + CSV met aangrenzende proviencies
     - CSV met Geotags om het plotten op de map te laten lijken
     ```
 
-- # Китай（中国）
+- # [Китай（中国）](https://github.com/SvenvBoven/zeuristieken/tree/master/China)
     ```diff
     - CSV met aangrenzende proviencies
     - CSV met Geotags om het plotten op de map te laten lijken
     ```
 
-- # Русланд (Rusland)
+- # [Русланд (Rusland)]((https://github.com/SvenvBoven/zeuristieken/tree/master/Rusland)
     ```diff
     - CSV met aangrenzende proviencies
     - CSV met Geotags om het plotten op de map te laten lijken
