@@ -47,11 +47,15 @@ def main():
 
 	# bereken de score
 	tScore1 = scoreCounter1(G, colormap)
+	print(tScore1, " score1")
 	tScore2 = scoreCounter2(G, colormap)
+	print(tScore2, " score2")
 	tScore3 = scoreCounter3(G, colormap)
+	print(tScore3, " score3")
 	tScore4 = scoreCounter4(G, colormap)
+	print(tScore4, " score4")
 
-	loopA = 1000
+	loopA = 100
 	for i in range(loopA):
 		if tScore1 < tScore2 and tScore1 < tScore3 and tScore1 < tScore4:
 			colormap = hillclimber(G, colormap, 1, tScore1, i , loopA)
@@ -84,33 +88,35 @@ def main():
 def hillclimber(G, colormap, scorefunctie, maxScore, i , loopA):
 	random_nodes = random_node_list(G)
 	for node in random_nodes:
-		colormapTemp = []
 
-		print(i)
-		if i < ((loopA/4)*3):
-			print((loopA-(i+(loopA/4)))/7.5)
+		# print(i)
+		# if i < ((loopA/4)*3):
+		# 	print((loopA-(i+(loopA/4)))/7.5)
 		# 	temperature = (loopA-(i+(loopA/4)))/7.5
 		# 	if temperature > 20:
 		# 		temperature = 20
 		# 	print(temperature)
 		# 	maxScore = maxScore+temperature
-		colorAv = controleColor(G, node)
-		G.nodes[node]['color'] = random.choice(colorAv)
-		color = nx.get_node_attributes(G,'color')
-		for node in G.nodes():
-			colormapTemp.append(color[node])
-		if scorefunctie is 1:
-			if maxScore > scoreCounter1(G, colormapTemp):
-				colormap = colormapTemp
-		if scorefunctie is 2:
-			if maxScore > scoreCounter2(G, colormapTemp):
-				colormap = colormapTemp
-		if scorefunctie is 3:
-			if maxScore > scoreCounter3(G, colormapTemp):
-				colormap = colormapTemp
-		if scorefunctie is 4:
-			if maxScore > scoreCounter4(G, colormapTemp):
-				colormap = colormapTemp
+		colorsAv = controleColor(G, node)
+		for colorAv in colorsAv:
+
+			colormapTemp = []
+			G.nodes[node]['color'] = colorAv
+			color = nx.get_node_attributes(G,'color')
+			for node in G.nodes():
+				colormapTemp.append(color[node])
+			if scorefunctie is 1:
+				if maxScore > scoreCounter1(G, colormapTemp):
+					colormap = colormapTemp
+			if scorefunctie is 2:
+				if maxScore > scoreCounter2(G, colormapTemp):
+					colormap = colormapTemp
+			if scorefunctie is 3:
+				if maxScore > scoreCounter3(G, colormapTemp):
+					colormap = colormapTemp
+			if scorefunctie is 4:
+				if maxScore > scoreCounter4(G, colormapTemp):
+					colormap = colormapTemp
 	return colormap
 
 # telt totaal score gebaseerd op kosten tabel 1
