@@ -101,7 +101,10 @@ def hillclimber(G, colormap, scorefunctie, maxScore, i , loopA):
 		for colorAv in colorsAv:
 
 			colormapTemp = []
-			G.nodes[node]['color'] = colorAv
+			if colorAv is not None:
+				G.nodes[node]['color'] = colorAv
+			else:
+				G.nodes[node]['color'] = 'black'
 			color = nx.get_node_attributes(G,'color')
 			for node in G.nodes():
 				colormapTemp.append(color[node])
