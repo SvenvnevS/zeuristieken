@@ -55,7 +55,7 @@ def main():
 	tScore4 = scoreCounter4(G, colormap)
 	print(tScore4, " score4")
 
-	loopA = 100
+	loopA = 1000
 	for i in range(loopA):
 		if tScore1 < tScore2 and tScore1 < tScore3 and tScore1 < tScore4:
 			colormap = hillclimber(G, colormap, 1, tScore1, i , loopA)
@@ -74,7 +74,7 @@ def main():
 			tScore3 = scoreCounter3(G, colormap)
 			print(tScore3, " scoreF3")
 
-
+			# t score is de score uit random
 		if tScore4 < tScore1 and tScore4 < tScore2 and tScore4 < tScore3:
 			colormap = hillclimber(G, colormap, 4, tScore4, i , loopA)
 			tScore4 = scoreCounter4(G, colormap)
@@ -86,25 +86,37 @@ def main():
 # end of main
 
 def hillclimber(G, colormap, scorefunctie, maxScore, i , loopA):
+
+
+
+	if i < ((loopA/4)*3):
+			
+		# 	##  bepalen hoeveel hij mag verslechteren op ieder moment
+			temperature = (loopA-(i+(loopA/4)))*0.7
+			if temperature > 20:
+				temperature = 20
+
+			# hoeveel mag de score verslechteren
+			maxScore = maxScore+temperature
+
+
+	# roep een lijst aan met alle provincies in random volgorde
 	random_nodes = random_node_list(G)
 	for node in random_nodes:
-
-		# print(i)
-		# if i < ((loopA/4)*3):
-		# 	print((loopA-(i+(loopA/4)))/7.5)
-		# 	temperature = (loopA-(i+(loopA/4)))/7.5
-		# 	if temperature > 20:
-		# 		temperature = 20
-		# 	print(temperature)
-		# 	maxScore = maxScore+temperature
+		# print(node)
+		# #  3/4 van de tijd sta je verslechtering toe, daana alleen maar verbetering
+		
 		colorsAv = controleColor(G, node)
 		for colorAv in colorsAv:
 
 			colormapTemp = []
+
+			# voldoe aan contain van niet dezelfde kleur als de buren
 			if colorAv is not None:
 				G.nodes[node]['color'] = colorAv
 			else:
 				G.nodes[node]['color'] = 'black'
+
 			color = nx.get_node_attributes(G,'color')
 			for node in G.nodes():
 				colormapTemp.append(color[node])
