@@ -51,7 +51,7 @@ def main():
 	tScore3 = scoreCounter3(G, colormap)
 	tScore4 = scoreCounter4(G, colormap)
 
-	loopA = 10000
+	loopA = 1000
 	for i in range(loopA):
 		if tScore1 < tScore2 and tScore1 < tScore3 and tScore1 < tScore4:
 			colormap = hillclimber(G, colormap, 1, tScore1, i , loopA)
@@ -85,7 +85,10 @@ def hillclimber(G, colormap, scorefunctie, maxScore, i , loopA):
 	random_nodes = random_node_list(G)
 	for node in random_nodes:
 		colormapTemp = []
-		# if i < ((loopA/4)*3):
+
+		print(i)
+		if i < ((loopA/4)*3):
+			print((loopA-(i+(loopA/4)))/7.5)
 		# 	temperature = (loopA-(i+(loopA/4)))/7.5
 		# 	if temperature > 20:
 		# 		temperature = 20
