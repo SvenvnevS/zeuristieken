@@ -20,7 +20,6 @@ def main():
 		for row in plots:
 			G.add_node(str(row[0]),color='None')
 
-
 	# lijnen tussen staten
 	with open('edges.csv', 'r') as csvfile:
 		plots = csv.reader(csvfile, delimiter=',')	
@@ -29,8 +28,6 @@ def main():
 
 	# lees de oude score uit file
 	
-
-
 		
 	for node in G.nodes():
 		# voeg kleur aan een node toe die de buren nog niet hebben

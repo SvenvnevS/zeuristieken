@@ -1,0 +1,14 @@
+Erkenning IDEA punten na gesprek 30/11
+
+I:2
+D:1
+E:0
+A:1
+
+Erkenning IDEA punten na gesprek 7/11
+
+I: 0
+D: 0
+E: 0
+A: 0
+
