@@ -9,7 +9,9 @@ import xlrd
 import math
 from networkx.algorithms import bipartite
 
-
+beste_score = 1000
+score_array = []
+beste_scores = []
 def main():
 
 	G = nx.Graph()
@@ -56,17 +58,36 @@ def main():
 	tScore4 = scoreCounter4(G, colormap)
 	print(tScore4, " score4")
 
-	loopA = 10
+	loopA = 50
+
 	for i in range(loopA):
-		if tScore1 < tScore2 and tScore1 < tScore3 and tScore1 < tScore4:
-			colormap = hillclimber(G, colormap, 1, tScore1, i , loopA)
+
+
+		# bekijk wat de hoogste random score heeft gekregen en ga daarmee de hillclimber in
+		if tScore1 < tScore2 and tScore1 < tScore3 and tScore1 < tScore4: 
+
+# JE GAAT HILLCLUMBER ALTIJD IN MET DE HOOGSTE SCORE
+
+			colormap = hillclimber(G, colormap, 1, tScore1, i, loopA)
+
+			# overschrijf de oude random score met de nieuwe hillclimber score 
 			tScore1 = scoreCounter1(G, colormap)
 			print(tScore1, " scoreF1")
-
 
 		if tScore2 < tScore1 and tScore2 < tScore3 and tScore2 < tScore4:
 			colormap = hillclimber(G, colormap, 2, tScore2, i , loopA)
 			tScore2 = scoreCounter2(G, colormap)
+
+			# VOEG ALLE NIEUWE BESTE SCORES TOE AAN ARRAY
+			score_array.append(tScore2)
+
+			if tScore2 < score_array[0]:
+	
+					beste_scores.append(tScore2)
+
+			score_array.sort()
+
+
 			print(tScore2, " scoreF2")
 
 
@@ -81,45 +102,71 @@ def main():
 			tScore4 = scoreCounter4(G, colormap)
 			print(tScore4, " scoreF4")
 
-	nx.draw_networkx(G, with_labels=True,node_color=colormap)
-	plt.show()
+	# nx.draw_networkx(G, with_labels=True,node_color=colormap)
+	# plt.show()
 # end of main
 
-def hillclimber(G, colormap, scorefunctie, maxScore, i , loopA):
+	beste_scores.sort()
+	print("de beste scores zijn {}" .format(beste_scores))
+	# print(score_array)
 
+def hillclimber(G, colormap, scorefunctie, oudeScore, i , loopA):
+
+	
+	T = loopA * (0.995 ** (i*20))
 	# roep een lijst aan met alle provincies in random volgorde
-
-	T = loopA * (0.5 ** i)
 	random_nodes = random_node_list(G)
+
+	# ga random nodes langs
 	for node in random_nodes:
-		# print(node)
-		# #  3/4 van de tijd sta je verslechtering toe, daana alleen maar verbetering
 		
+		# vraag een lijst op van die specifieke node, welke andere kleuren die node zou kunnen krijgen
 		colorsAv = controleColor(G, node)
+
+		# voor iedere kleur in de kleurenlijst
 		for colorAv in colorsAv:
 
 			colormapTemp = []
 
-			# voldoe aan contain van niet dezelfde kleur als de buren
+			# vul de node met die kleur
 			if colorAv is not None:
 				G.nodes[node]['color'] = colorAv
 			else:
 				G.nodes[node]['color'] = 'black'
 
+			# vraag de kleur op van alle nodes 
 			color = nx.get_node_attributes(G,'color')
+
 			for node in G.nodes():
+
+				# voeg de kleur van die node toe aan de array
 				colormapTemp.append(color[node])
+
+
 			# if scorefunctie is 1:
-			# 	if maxScore > scoreCounter1(G, colormapTemp):
+			# 	if oudeScore > scoreCounter1(G, colormapTemp):
 			# 		colormap = colormapTemp
+
+
+
+			# als uit de 4 random kostentabellen, tabel 2 het beste was, wordt hillclimber aangeroepen met 2 
 			if scorefunctie is 2:
-				if sAnneal(G, colormapTemp, loopA, T, maxScore) is 1:
+
+				# als de nieuwe score beter is dan de vorige score, houd deze dan. Anders Allealing
+				new_score = scoreCounter2(G, colormapTemp)
+				if  new_score < oudeScore:
 					colormap = colormapTemp
+				else:
+					getal = sAnneal(G, colormapTemp, loopA, T, oudeScore, i)
+					if getal is 1:
+						colormap = colormapTemp
+
+
 			# if scorefunctie is 3:
-			# 	if maxScore > scoreCounter3(G, colormapTemp):
+			# 	if oudeScore > scoreCounter3(G, colormapTemp):
 			# 		colormap = colormapTemp
 			# if scorefunctie is 4:
-			# 	if maxScore > scoreCounter4(G, colormapTemp):
+			# 	if oudeScore > scoreCounter4(G, colormapTemp):
 			# 		colormap = colormapTemp
 	return colormap
 
@@ -388,18 +435,28 @@ def random_node_list(G):
 		rannie = random.choice(list_1)
 		list_2.append(rannie)
 		list_1.remove(rannie)
-	print(list_2)
+	# print(list_2)
 	return(list_2)
 
-def sAnneal(G, colormapTemp, loopA, T, maxScore):
+def sAnneal(G, colormapTemp, loopA, T, oudeScore, i):
 
 
+	# bereken de nieuwe score nadat er 1 node zijn kleur is aangepast
 	scoreNew = scoreCounter2(G,colormapTemp)
-	check1 = math.e ** ((maxScore-scoreNew) / T) 
-	print("check 1", check1)
+
+	# gebruik de 1e keer 1000 als beste score. daarna de beste score tot dantoe gevonden
+	# if i is 0:
+	check1 = math.e ** ((beste_score-scoreNew) / T) 
+		# print("done")
+	# else:
+	# 	bestuu_score = score_array[0]
+	# 	check1 = math.e ** ((bestuu_score-scoreNew) / T) 
+
 	check2 = random.uniform(0, 1)
 
+	# als de nieuwe score niet te slecht is, gaan we met die score verder
 	if check1 > check2:
+
 		return 1
 if __name__ == '__main__':
 	main()
