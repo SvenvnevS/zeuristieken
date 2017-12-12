@@ -11,9 +11,9 @@ from networkx.algorithms import bipartite
 
 def main():
 
-if sys.version_info[0] < 3:
-    raise Exception("Python 3 or a more recent version is required.")
-	for kipsate in range(100000):
+# if sys.version_info[0] < 3:
+    # raise Exception("Python 3 or a more recent version is required.")
+	for kipsate in range(10):
 		G = nx.Graph()
 
 		# nodes neerzetten per provincie

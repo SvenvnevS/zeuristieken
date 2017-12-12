@@ -31,43 +31,42 @@ def main():
 			G.add_edge(str(row[0]),str(row[1]))
 
 	# lees de oude score uit file
+
+
+	loopA = 100
 	
-
-
+	for i in range(loopA):	
 		
-	for node in G.nodes():
-		# voeg kleur aan een node toe die de buren nog niet hebben
-		createColor(G, node, controleColor(G, node))
+		for node in G.nodes():
+			# voeg kleur aan een node toe die de buren nog niet hebben
+			createColor(G, node, controleColor(G, node))
+			
 
 
-	colormap = []
+		colormap = []
 
-	# vraag de kleur op van een specifieke node
-	color = nx.get_node_attributes(G,'color')
-	for node in G.nodes():
-		# voeg de kleur toe in de array
-		colormap.append(color[node])
+		# vraag de kleur op van een specifieke node
+		color = nx.get_node_attributes(G,'color')
+		for node in G.nodes():
+			# voeg de kleur toe in de array
+			colormap.append(color[node])
 
-	# bereken de score
-	tScore1 = scoreCounter1(G, colormap)
-	print(tScore1, " score1")
-	tScore2 = scoreCounter2(G, colormap)
-	print(tScore2, " score2")
-	tScore3 = scoreCounter3(G, colormap)
-	print(tScore3, " score3")
-	tScore4 = scoreCounter4(G, colormap)
-	print(tScore4, " score4")
-
-	loopA = 50
-
-	for i in range(loopA):
+		# bereken de score
+		tScore1 = scoreCounter1(G, colormap)
+		print(tScore1, "RANDOM score1")
+		tScore2 = scoreCounter2(G, colormap)
+		print(tScore2, "RANDOM score2")
+		tScore3 = scoreCounter3(G, colormap)
+		print(tScore3, "RANDOM score3")
+		tScore4 = scoreCounter4(G, colormap)
+		print(tScore4, "RANDOM score4")
 
 
 		# bekijk wat de hoogste random score heeft gekregen en ga daarmee de hillclimber in
 		if tScore1 < tScore2 and tScore1 < tScore3 and tScore1 < tScore4: 
 
 # JE GAAT HILLCLUMBER ALTIJD IN MET DE HOOGSTE SCORE
-
+		
 			colormap = hillclimber(G, colormap, 1, tScore1, i, loopA)
 
 			# overschrijf de oude random score met de nieuwe hillclimber score 
@@ -75,17 +74,36 @@ def main():
 			print(tScore1, " scoreF1")
 
 		if tScore2 < tScore1 and tScore2 < tScore3 and tScore2 < tScore4:
+
 			colormap = hillclimber(G, colormap, 2, tScore2, i , loopA)
-			tScore2 = scoreCounter2(G, colormap)
+			tScore2 = scoreCounter2(G, colormap)			
 
 			# VOEG ALLE NIEUWE BESTE SCORES TOE AAN ARRAY
 			score_array.append(tScore2)
 
 			if tScore2 < score_array[0]:
 	
-					beste_scores.append(tScore2)
+				beste_scores.append(tScore2)
 
-			score_array.sort()
+				score_array.sort()
+
+
+				# open worksheet
+				wb = xlwt.Workbook()
+				# add sheet
+				ws = wb.add_sheet("beste_Scores")
+
+				n = 1
+				for node in G.nodes():
+
+					print("a")
+
+					ws.write(n,0, node)
+					ws.write(n,1, color[node])
+					n+=1
+				# write in cel 0 , 0
+				ws.write(0,0, tScore2)
+				wb.save("beste_scores.xls")
 
 
 			print(tScore2, " scoreF2")
@@ -113,9 +131,19 @@ def main():
 def hillclimber(G, colormap, scorefunctie, oudeScore, i , loopA):
 
 	
-	T = loopA * (0.995 ** (i*20))
+	# linaire T
+	T = loopA - i
+	# print(T)
+
+
+	# exponentieele T
+	# T = loopA * (0.995 ** (i*20))
+
+	# T2 = loopA/(math.log10(i+20))'
+
 	# roep een lijst aan met alle provincies in random volgorde
 	random_nodes = random_node_list(G)
+
 
 	# ga random nodes langs
 	for node in random_nodes:
@@ -150,16 +178,17 @@ def hillclimber(G, colormap, scorefunctie, oudeScore, i , loopA):
 
 
 			# als uit de 4 random kostentabellen, tabel 2 het beste was, wordt hillclimber aangeroepen met 2 
-			if scorefunctie is 2:
+				if scorefunctie is 2:
 
-				# als de nieuwe score beter is dan de vorige score, houd deze dan. Anders Allealing
-				new_score = scoreCounter2(G, colormapTemp)
-				if  new_score < oudeScore:
-					colormap = colormapTemp
-				else:
-					getal = sAnneal(G, colormapTemp, loopA, T, oudeScore, i)
-					if getal is 1:
+					# als de nieuwe score beter is dan de vorige score, houd deze dan. Anders Annealing
+					new_score = scoreCounter2(G, colormapTemp)
+
+					if  new_score < oudeScore:
 						colormap = colormapTemp
+					else:
+						getal = sAnneal(G, colormapTemp, T, oudeScore, i)
+						if getal is 1:
+							colormap = colormapTemp
 
 
 			# if scorefunctie is 3:
@@ -431,32 +460,30 @@ def random_node_list(G):
 
 		list_1.append(node)
 
-	for i in range(51):
+	for i in range(len(list_1)):
 		rannie = random.choice(list_1)
 		list_2.append(rannie)
 		list_1.remove(rannie)
-	# print(list_2)
 	return(list_2)
 
-def sAnneal(G, colormapTemp, loopA, T, oudeScore, i):
-
+def sAnneal(G, colormapTemp, T, oudeScore, i):
 
 	# bereken de nieuwe score nadat er 1 node zijn kleur is aangepast
 	scoreNew = scoreCounter2(G,colormapTemp)
+	print(scoreNew)
+	print(oudeScore)
+
 
 	# gebruik de 1e keer 1000 als beste score. daarna de beste score tot dantoe gevonden
 	# if i is 0:
-	check1 = math.e ** ((beste_score-scoreNew) / T) 
-		# print("done")
-	# else:
-	# 	bestuu_score = score_array[0]
-	# 	check1 = math.e ** ((bestuu_score-scoreNew) / T) 
+	check1 = math.e ** ((scoreNew - oudeScore) / T) 
+	# print(check1)
+
 
 	check2 = random.uniform(0, 1)
-
 	# als de nieuwe score niet te slecht is, gaan we met die score verder
 	if check1 > check2:
-
 		return 1
+
 if __name__ == '__main__':
 	main()

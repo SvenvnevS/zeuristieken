@@ -28,8 +28,7 @@ def main():
 			for row in plots:
 				G.add_node(str(row[0]),color='None')
 				
-
-
+				
 		# lijnen tussen staten
 		with open('edges.csv', 'r') as csvfile:
 			plots = csv.reader(csvfile, delimiter=',')	
@@ -52,16 +51,11 @@ def main():
 		last_score4 = sh.cell_value(rowx = 0, colx = 0)
 
 
-		list_nodes = random_node_list(G)
-
-		# print(list_nodes)
-
+		list_nodes = random_node_list(G)		
 		for node in list_nodes:
-			# print (node)
 
 			# voeg kleur aan een node toe die de buren nog niet hebben
 			createColor(G, node, controleColor(G, node))
-
 
 		colormap = []
 
@@ -69,8 +63,7 @@ def main():
 		color = nx.get_node_attributes(G,'color')
 		for node in G.nodes():
 
-
-			# voeg de kleur toe in de array
+			# voeg de kleur toe in de array om score te kunnen printen
 			colormap.append(color[node])
 
 		# bereken de score
@@ -85,14 +78,12 @@ def main():
 		score_3.append(tScore3)
 		score_4.append(tScore4)
 		
-
 		# print(nx.info(G))
 
 		# print("score is: {}".format(tScore))
 
 
 		if last_score1 > tScore1:
-
 			
 			# open worksheet
 			wb = xlwt.Workbook()
@@ -108,11 +99,9 @@ def main():
 			ws.write(0,0, tScore1)
 			wb.save("score1.xls")
 
-
 		# vul de excel sheet met de score , provicies en kleur per provincie
 		if last_score2 > tScore2:
 
-			
 			# open worksheet
 			wb = xlwt.Workbook()
 			# add sheet
@@ -162,13 +151,13 @@ def main():
 			wb.save("score4.xls")
 
 		# teken de map
-		nx.draw_networkx(G, with_labels=True,node_color=colormap)
+		# nx.draw_networkx(G, with_labels=True,node_color=colormap)
 
-		plt.show()
+		# plt.show()
 	# end of main
 		print(kipsate)
 
-
+	# SCHRIJFT ALLE SCORES NAAR EXCEL
 	n = 0
 	wb = xlwt.Workbook()
 		# add sheet
@@ -182,9 +171,7 @@ def main():
 		ws.write(n,3, score_4[score])
 		n+=1
 
-
 	wb.save("totalscore.xls")
-
 
 # telt totaal score gebaseerd op kosten tabel 1
 def scoreCounter1(G, colormap):
@@ -224,11 +211,11 @@ def scoreCounter1(G, colormap):
 	kleuren.append(orange)
 	kleuren.append(purple)
 	kleuren.append(grey)
-	# print(kleuren)
+	
 	bubbleSort(kleuren)
 
 
-	# print(kleuren)
+	
 	score += kleuren[0]*12
 	score += kleuren[1]*26
 	score += kleuren[2]*27
@@ -373,9 +360,9 @@ def scoreCounter4(G, colormap):
 	kleuren.append(orange)
 	kleuren.append(purple)
 	kleuren.append(grey)
-	# print(kleuren)
+	
 	bubbleSort(kleuren)
-	# print(kleuren)
+	
 	score += kleuren[0]*3
 	score += kleuren[1]*34
 	score += kleuren[2]*36
@@ -405,7 +392,6 @@ def controleColor(G, province):
 	 	# vraag de kleuren op van de buren van een provincie
 	 	kleuren += (colr[neighbor])
 
-	 	# print(kleuren)
 	 	
 	if 'grey' not in kleuren:
 		colorsAvailable.append('grey')
@@ -422,7 +408,6 @@ def controleColor(G, province):
 	if 'purple' not in kleuren:
 		colorsAvailable.append('purple')
 
-	print(colorsAvailable)
 	return colorsAvailable
 
 # copied from http://interactivepython.org/runestone/static/pythonds/SortSearch/TheBubbleSort.html
@@ -458,7 +443,6 @@ def random_node_list(G):
 		rannie = random.choice(list_1)
 		list_2.append(rannie)
 		list_1.remove(rannie)
-	print(list_2)
 	return(list_2)
 
 
