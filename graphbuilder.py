@@ -16,11 +16,15 @@ from networkx.algorithms import bipartite
 def main():
 	G = nx.Graph()
 	# nodes neerzetten per provincie
-	with open("UKRAINE/nodes.csv", 'r') as csvfile:
-		plots = csv.reader(csvfile, delimiter=',')	
-		for row in plots:
-			G.add_node(str(row[0]),color='None')
+	text = input("welke excel? ")
+	book = xlrd.open_workbook(text)
+	sh = book.sheet_by_index(0)
+	n=0
+	for rows in sh.col(0):
 
+		G.add_node(str(rows.value),color=sh.col(1)[n].value)
+		n+=1
+	G.remove_node(str(sh.col(0)[0].value))
 
 	# lijnen tussen staten
 	with open("UKRAINE/edges.csv", 'r') as csvfile:
@@ -31,14 +35,10 @@ def main():
 	# lees de oude score uit file
 	
 	colormap = []
-	text = input("welke excel? score1.xls t/m score4.xls ")
-	book = xlrd.open_workbook(text)
-	sh = book.sheet_by_index(0)
-	best_score = sh.cell_value(rowx = 0, colx = 0)
-	for rows in sh.col(1):
-		colormap.append(rows.value)
-	del colormap[0]
-	print(colormap)
+	color = nx.get_node_attributes(G,'color')
+	for node in G.nodes():
+		# voeg de kleur toe in de array
+		colormap.append(color[node])
 
 
 	# 	# vraag de kleur op van een specifieke node
@@ -52,7 +52,6 @@ def main():
 
 
 	# print(nx.info(G))
-	print(best_score)
 
 
 # geeft nu random kleur uit de lijst colorsAvailable
