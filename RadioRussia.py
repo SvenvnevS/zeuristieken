@@ -10,7 +10,8 @@ sys.path.append(parent_dir_name + "/zeuristieken/Algoritmes/Random")
 
 
 from scorecalculator import scoreCounter
-from dataLoader import random
+from dataLoader import dataLoader
+from Random import rand
 from hill import hillclimber
 from greedy import greed
 
@@ -22,9 +23,12 @@ def main():
 	land = input("welk land wil je plotten? (RUSSIA/UKRAINE/USA) ")
 	nodescsv = land + "/nodes.csv"
 	edgescsv = land + "/edges.csv"
-	G = random(nodescsv, edgescsv)
+
+	G = dataLoader(nodescsv, edgescsv)
+	G = rand(G)
 	
 	cost_table = int(input("welke kosten tabel? 1 t/m 4 "))-1
+
 	# bereken de score
 	total_costs, colormap = scoreCounter(G, cost_table)
 

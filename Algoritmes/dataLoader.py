@@ -1,10 +1,7 @@
-from hill import createColor
-from hill import controleColor
-
 import networkx as nx
 import csv
 
-def random(file_a, file_b):
+def dataLoader(file_a, file_b):
 	G = nx.Graph()
 
 	# nodes neerzetten per provincie
@@ -19,9 +16,5 @@ def random(file_a, file_b):
 		for row in plots:
 			G.add_edge(str(row[0]),str(row[1]))
 
-	# for i in range(5):
-	for node in G.nodes():
-		# voeg kleur aan een node toe die de buren nog niet hebben
-		createColor(G, node, controleColor(G, node))
-
+	
 	return G
