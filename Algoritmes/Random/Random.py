@@ -1,15 +1,8 @@
 import csv
-import sys
-import io
 import networkx as nx
 import matplotlib.pyplot as plt
 import random
-import xlwt
-import xlrd
-import math
 from networkx.algorithms import bipartite
-import copy
-import numpy as np
 
 def rand(G):
 	for node in G.nodes():

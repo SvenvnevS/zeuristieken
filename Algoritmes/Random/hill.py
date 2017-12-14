@@ -164,14 +164,6 @@ def random_node_list(G):
 		list_1.remove(rannie)
 	# print(list_2)
 	return list_2
-	# print(G.nodes())
-	# print(copy.deepcopy(G.nodes()))
-	# print(random.shuffle(copy.deepcopy(G.nodes())))
-	# shuffled_nodes = copy.deepcopy(G.nodes())
-	# print(shuffled_nodes)
-	# random.shuffle(shuffled_nodes)
-
-	# return shuffled_nodes
 
 
 
