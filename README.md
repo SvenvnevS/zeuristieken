@@ -10,34 +10,34 @@
 **ForMotherRussia**
 
 De russische overheid wil een goede verdeling van zendfrequenties. 
-Er zijn precies zeven type zendmasten beschikbaar, voor het moment bekend als type A t/m type G. 
+Er zijn precies zeven typen zendmasten beschikbaar, voor het moment bekend als type A t/m type G. 
 Voor een goede verdeling is het noodzakelijk dat twee aangrenzende provincies niet dezelfde zendertypes hebben.
 Omdat wisundigen van de russische overheid de details van de optimale oplossing niet precies kennen hebben ze ook wat kaarten van kleinere landen ter hand genomen, in de hoop het probleem wat beter te gaan begrijpen.
-
-## Beginnen
-
-+ Clone de repository
-+ Pake the repository uit
-+ Controleer kopje **benodigheden** of je alles heb geinstaleerd om dit uit te kunnen voeren
-+ Run **RadioRussia .py**
-  + Kies een map(Typ in welke van de keuzes in terminal)
-  + Kies welke algoritme
-    +  Greedy en hilclimber moet je ook aangeven hoevaak je deze wilt laten runnen.
- + De score word opgeslagen in **zeuristieken/"gekozenmap"/hiscore**
- + Als je een Graph wilt van de highscore, Run graphbuilder .py en volg de instructies in de terminal.
-
 
 ### Benodigheden
 
 Benodigheden om dit het programma te kunnen gebruiken
 + Python3
   +   [Download hier de versie 3.+](https://www.python.org/downloads/windows)
-    With the modules
+    Make sure you have the following modules, all of them are supplied by pip (pip install <package>)
        + matplotlib
        + networkx [documuntation for install](https://networkx.github.io/documentation/stable/install.html)
        + xlwt
        + xlrd
-       + numpy 
+       + numpy
+
+## Beginnen
+
++ Kloon/Download de repository en open deze
++ Run **RadioRussia .py**
+  + Kies een map(Type uw keuze in de terminal)
+  + Kies welk algoritme
+    +  Voor Greedy en hilclimber moet je ook aangeven hoe vaak je deze wilt laten itereren.
+ + De score word opgeslagen in **zeuristieken/"uw_keuze"/hiscore**
+ + Als je een Graph wilt van de highscore, gebruik dan graphbuilder .py en volg de instructies in de terminal.
+
+
+
 
 ## Map stuctuur  
 
@@ -71,7 +71,7 @@ Benodigheden om dit het programma te kunnen gebruiken
 
 - # [Русланд (Rusland)](https://github.com/SvenvBoven/zeuristieken/tree/master/Rusland)
     ```
-   edges.csv, Hier staan alle edges van alle nots van het land.
+   edges.csv, Hier staan alle edges van alle notes van het land.
    hiScore.xls, beste score
    hill_climber_scores.xls, Hillcliber scores
    nodes.csv, Elke node van het land om deze casus uit te kunnen voeren
