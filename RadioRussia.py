@@ -18,26 +18,26 @@ cost_table = 1
 def main():
 
 	# maak een random indeling
-	G = random("UKRAINE/nodes.csv", "UKRAINE/edges.csv")
+	G = random("RUSLAND/nodes.csv", "RUSLAND/edges2.csv")
 	
 	# bereken de score
 	total_costs, colormap = scoreCounter(G, cost_table)
 	print("RANDOM" .format(total_costs))
 
 	# show de random indeling
-	# nx.draw_networkx(G, with_labels=True,node_color=colormap)
-	# plt.show()
+	nx.draw_networkx(G, with_labels=True,node_color=colormap)
+	plt.show()
 
 
 	# # draai hillclimber x aantal keer
-	G, score = hillclimber(G, 1000, cost_table)
+	# G, score = hillclimber(G, 1000, cost_table)
 
 	
-	total_costs, colormap = scoreCounter(G, cost_table)
-	print(total_costs)
+	# total_costs, colormap = scoreCounter(G, cost_table)
+	# print(total_costs)
 
-	nx.draw_networkx(G, with_labels=True,node_color=colormap)
-	plt.show()
+	# nx.draw_networkx(G, with_labels=True,node_color=colormap)
+	# plt.show()
 
 
 if __name__ == '__main__':
