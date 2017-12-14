@@ -33,7 +33,7 @@ Benodigheden om dit het programma te kunnen gebruiken
 + Python3
   +   [Download hier de versie 3.+](https://www.python.org/downloads/windows)
     With the modules
-       + csv [documentation for install]()
+       + matplotlib
        + networkx [documuntation for install](https://networkx.github.io/documentation/stable/install.html)
        + xlwt
        + xlrd
