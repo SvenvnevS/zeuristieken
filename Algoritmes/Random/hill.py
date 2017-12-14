@@ -185,7 +185,7 @@ def hillclimber(G, iterations, cost_schedule):
 
 		# keep the new state if its an improvement
 
-		if new_S < old_S:
+		if new_S <= old_S:
 
 			alle_scores.append(new_S)
 
@@ -211,7 +211,7 @@ def hillclimber(G, iterations, cost_schedule):
 				ws.write(0,0, new_S)
 				wb.save("beste_scores.xls")
 
-			print(new_S)
+			# print(new_S)
 			old_S = new_S
 			old_G = G
 
@@ -239,17 +239,18 @@ def sAnneal(T, old_S, new_S):
 
 	# print("JAAHAA")
 	# print("T is {} " .format(T))
-	print ("old score is {}" .format(old_S))
+	# print ("old score is {}" .format(old_S))
 		# print (new_S)
 
 
-	check = math.e ** ((new_S - old_S) / T)
+	check = math.e ** ((old_S - new_S) / T)
 	print("check is {}".format(check))
 
 	check2 = random.uniform(0, 1)
 
 	if check > check2:
 		return 1
+	# return check > check
 
 def excel_writer(score_array):
 
