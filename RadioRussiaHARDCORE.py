@@ -21,20 +21,20 @@ from greedy import greed
 def main():
 
 	# maak een random indeling
-	land = input("welk land wil je plotten? (RUSSIA/UKRAINE/USA) ")
+	land = "UKRAINE"
 	nodescsv = land + "/nodes.csv"
 	edgescsv = land + "/edges.csv"
 
 	G = dataLoader(nodescsv, edgescsv)
 	G = rand(G)
 	
-	cost_table = int(input("welke kosten tabel? 1 t/m 4 "))-1
+	cost_table = 2
 
 	# bereken de score
 	total_costs, colormap = scoreCounter(G, cost_table)
 
 	destination = land + "/hiScore.xls"
-	algo = input('welke algoritme? (random/greedy/hillclimber) ')
+	algo = "greedy"
 	if algo == 'random':
 		# show de random indeling
 		dataWriter(G, destination, cost_table, total_costs, algo)
@@ -42,7 +42,7 @@ def main():
 		plt.show()
 
 	if algo == 'greedy':
-		iter = int(input("how many iterations? "))
+		iter = 5
 		# # draai hillclimber x aantal keer
 		G, score = greed(G, iter, cost_table)
 		total_costs, colormap = scoreCounter(G, cost_table)
