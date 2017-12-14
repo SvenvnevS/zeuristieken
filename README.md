@@ -85,7 +85,7 @@ Benodigheden om dit het programma te kunnen gebruiken
   + [**Stephan de Graaf**](https://github.com/maaker48) - *AFKEr* -
   + [**Sven van Boen**](https://github.com/SvenvBoven) - *CTL+ALT+DELETE* -
 + # руководитель(Ta)
-  + **Maarten van der Sande** -*Begeleider*-
+  + [**Maarten van der Sande**](https://github.com/Maarten-vd-Sande) -*Begeleider*-
  
 Een lijst van  [contributors](https://github.com/SvenvBoven/zeuristieken/graphs/contributors) die mee hebben gedaan met de casus
 
