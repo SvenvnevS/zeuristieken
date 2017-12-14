@@ -11,53 +11,55 @@ from networkx.algorithms import bipartite
 import copy
 import numpy as np
 
+from scorecalculator import scoreCounter
+
 
 beste_score = 1000
 score_array = []
-beste_scores = []
+beste_scores = [6666]
 alle_scores = []
 
 
 
 
-def main():
+# def main():
 
-	G = nx.Graph()
-	# H = nx.Graph()
+# 	G = nx.Graph()
+# 	# H = nx.Graph()
 
-	# nodes neerzetten per provincie
-	with open('nodes.csv', 'r') as csvfile:
-		plots = csv.reader(csvfile, delimiter=',')	
-		for row in plots:
-			G.add_node(str(row[0]),color='None')
+# 	# nodes neerzetten per provincie
+# 	with open('nodes.csv', 'r') as csvfile:
+# 		plots = csv.reader(csvfile, delimiter=',')	
+# 		for row in plots:
+# 			G.add_node(str(row[0]),color='None')
 
-	# lijnen tussen staten
-	with open('edges.csv', 'r') as csvfile:
-		plots = csv.reader(csvfile, delimiter=',')	
-		for row in plots:
-			G.add_edge(str(row[0]),str(row[1]))
+# 	# lijnen tussen staten
+# 	with open('edges.csv', 'r') as csvfile:
+# 		plots = csv.reader(csvfile, delimiter=',')	
+# 		for row in plots:
+# 			G.add_edge(str(row[0]),str(row[1]))
 
-	# lees de oude score uit file
+# 	# lees de oude score uit file
 	
-	# for i in range(5):
-	for node in G.nodes():
-		# voeg kleur aan een node toe die de buren nog niet hebben
-		createColor(G, node, controleColor(G, node))
+# 	# for i in range(5):
+# 	for node in G.nodes():
+# 		# voeg kleur aan een node toe die de buren nog niet hebben
+# 		createColor(G, node, controleColor(G, node))
 
 
-	colormap = []
+# 	colormap = []
 
-	# vraag de kleur op van een specifieke node
-	color = nx.get_node_attributes(G,'color')
-	for node in G.nodes():
-		# voeg de kleur toe in de array
-		colormap.append(color[node])
+# 	# vraag de kleur op van een specifieke node
+# 	color = nx.get_node_attributes(G,'color')
+# 	for node in G.nodes():
+# 		# voeg de kleur toe in de array
+# 		colormap.append(color[node])
 
-	# bereken de score
-	tScore1 = scoreCounter1(G, colormap)
-	print(tScore1, " score1")
-	tScore1 = scoreCounter(G, colormap, 0)
-	print(tScore1, " score1")
+# 	# bereken de score
+# 	tScore1 = scoreCounter1(G, colormap)
+# 	print(tScore1, " score1")
+# 	tScore1 = scoreCounter(G, colormap, 0)
+# 	print(tScore1, " score1")
 	# tScore2 = scoreCounter2(G, colormap)
 	# print(tScore2, " score2")
 	# tScore3 = scoreCounter3(G, colormap)
@@ -145,8 +147,10 @@ def main():
 	# 	print("de beste scores zijn {}" .format(beste_scores))
 
 def randomSwap(G):
+
 	# pick a random node
 	random_node = random_node_list(G)[0]
+
 	# check which colors are valid for this node
 	valid_colors = controleColor(G, random_node)
 
@@ -160,29 +164,112 @@ def randomSwap(G):
 
 
 # def hillclimber(G, colormap, scorefunctie, oude_score, i, loopA):
-def hillclimber(G, iterations):
+def hillclimber(G, iterations, cost_schedule):
 	# roep een lijst aan met alle provincies in random volgorde
 	for iter in range(iterations):
+
+		# calculate current temperture
+		T = iterations - iter
+
 		# store the old state
 		old_G = copy.deepcopy(G)
-		old_S = scoreCounter(old_G, 0)
+
+
+		old_S, colormap = scoreCounter(old_G, cost_schedule)
 
 		# randomly swap a node's color
 		G = randomSwap(G)
 
 		# get the new score
-		new_S = scoreCounter(G, 0)
+		new_S, colormap = scoreCounter(G, cost_schedule)
 
 		# keep the new state if its an improvement
+
 		if new_S < old_S:
+
+			alle_scores.append(new_S)
+
+			if new_S < beste_scores[0]:
+				beste_scores.append(new_S)
+				beste_scores.sort()
+
+				
+				# open worksheet
+				wb = xlwt.Workbook()
+					# add sheet
+				ws = wb.add_sheet("beste_Scores")
+
+				n = 1
+				color = nx.get_node_attributes(G,'color')
+				
+				for node in G.nodes():
+
+					ws.write(n,0, node)
+					ws.write(n,1, color[node])
+					n+=1
+				# write in cel 0 , 0
+				ws.write(0,0, new_S)
+				wb.save("beste_scores.xls")
+
 			print(new_S)
 			old_S = new_S
 			old_G = G
+
+
+
+
+		elif sAnneal(T, old_S, new_S) == 1:
+			alle_scores.append(new_S)
+
+			print("ANEEALING DONEEEE")
+			old_S = new_S
+			old_G = G
+
 		# go back to the previous state since it's worse
 		else:
 			G = old_G
 
+	excel_writer(alle_scores)
+	print(beste_scores)
+
 	return G, old_S
+
+
+def sAnneal(T, old_S, new_S):
+
+	# print("JAAHAA")
+	# print("T is {} " .format(T))
+	print ("old score is {}" .format(old_S))
+		# print (new_S)
+
+
+	check = math.e ** ((new_S - old_S) / T)
+	print("check is {}".format(check))
+
+	check2 = random.uniform(0, 1)
+
+	if check > check2:
+		return 1
+
+def excel_writer(score_array):
+
+	
+	print("KUT")
+	wb = xlwt.Workbook()
+	
+	ws = wb.add_sheet("Scores")
+
+	for n in range(len(score_array)):
+
+		ws.write(n, 0, n)
+		ws.write(n, 1, score_array[n])
+
+	wb.save("hill_climber_scores.xls")
+
+
+
+
+
 
 	# random_nodes = random_node_list(G)
 	# for node in random_nodes:
@@ -260,250 +347,250 @@ def hillclimber(G, iterations):
 
 	# 	return colormap
 
-# The cost table provided by Daan...
-COSTS = np.array([ [12, 26, 27, 30, 37, 39, 41, 666],
-	               [19, 20, 21, 11, 14, 19, 32, 666],
-	               [19, 20, 22, 23, 26, 37, 39, 666],
-	               [19, 10, 17, 23, 26, 37, 39, 666]])
+# # The cost table provided by Daan...
+# COSTS = np.array([ [12, 26, 27, 30, 37, 39, 41, 666],
+# 	               [19, 20, 21, 23, 36, 37, 38, 666],
+# 	               [16, 17, 31, 33, 36, 56, 57, 666],
+# 	               [3, 34, 36, 39, 41, 43, 58, 666]])
 
 
-def scoreCounter(G, cost_table):
-	colormap = [G.nodes[node]['color'] for node in G.nodes()]
+# def scoreCounter(G, cost_table):
+# 	colormap = [G.nodes[node]['color'] for node in G.nodes()]
 
-	kleur_labels = {'red': 		0,
-					'green': 	1,
-					'blue': 	2,
-					'yellow': 	3,
-					'orange': 	4,
-					'purple': 	5,
-					'grey': 	6,
-					'black': 	7}
+# 	kleur_labels = {'red': 		0,
+# 					'green': 	1,
+# 					'blue': 	2,
+# 					'yellow': 	3,
+# 					'orange': 	4,
+# 					'purple': 	5,
+# 					'grey': 	6,
+# 					'black': 	7}
 
-	kleuren = np.zeros(8)
-	for kleur in colormap:
-		kleuren[kleur_labels[kleur]] += 1
+# 	kleuren = np.zeros(8)
+# 	for kleur in colormap:
+# 		kleuren[kleur_labels[kleur]] += 1
 
-	# sort ascending
-	kleuren = np.sort(kleuren)[::-1]
+# 	# sort ascending
+# 	kleuren = np.sort(kleuren)[::-1]
 
-	total_costs = np.sum(COSTS[cost_table] * kleuren)
-	return total_costs
+# 	total_costs = np.sum(COSTS[cost_table] * kleuren)
+# 	return total_costs
 
-	# for kleur in colormap:
-	# 	if kleur == 'red':
-	# 		red+=1
-	# 	if kleur == 'green':
-	# 		green+=1
-	# 	if kleur == 'blue':
-	# 		blue+=1
-	# 	if kleur == 'yellow':
-	# 		yellow+=1
-	# 	if kleur == 'orange':
-	# 		orange+=1
-	# 	if kleur == 'purple':
-	# 		purple+=1
-	# 	if kleur == 'grey':
-	# 		grey+=1
-	# 	if kleur == 'black':
-	# 		score=6666666
-	# 		return score
+# 	# for kleur in colormap:
+# 	# 	if kleur == 'red':
+# 	# 		red+=1
+# 	# 	if kleur == 'green':
+# 	# 		green+=1
+# 	# 	if kleur == 'blue':
+# 	# 		blue+=1
+# 	# 	if kleur == 'yellow':
+# 	# 		yellow+=1
+# 	# 	if kleur == 'orange':
+# 	# 		orange+=1
+# 	# 	if kleur == 'purple':
+# 	# 		purple+=1
+# 	# 	if kleur == 'grey':
+# 	# 		grey+=1
+# 	# 	if kleur == 'black':
+# 	# 		score=6666666
+# 	# 		return score
 
-# telt totaal score gebaseerd op kosten tabel 1
-def scoreCounter1(G, colormap):
-	score = 0
-	red = 0
-	green = 0
-	blue = 0
-	yellow = 0
-	orange = 0
-	purple = 0
-	grey = 0
+# # telt totaal score gebaseerd op kosten tabel 1
+# def scoreCounter1(G, colormap):
+# 	score = 0
+# 	red = 0
+# 	green = 0
+# 	blue = 0
+# 	yellow = 0
+# 	orange = 0
+# 	purple = 0
+# 	grey = 0
 
-	for kleur in colormap:
-		if kleur == 'red':
-			red+=1
-		if kleur == 'green':
-			green+=1
-		if kleur == 'blue':
-			blue+=1
-		if kleur == 'yellow':
-			yellow+=1
-		if kleur == 'orange':
-			orange+=1
-		if kleur == 'purple':
-			purple+=1
-		if kleur == 'grey':
-			grey+=1
-		if kleur == 'black':
-			score=6666666
-			return score
+# 	for kleur in colormap:
+# 		if kleur == 'red':
+# 			red+=1
+# 		if kleur == 'green':
+# 			green+=1
+# 		if kleur == 'blue':
+# 			blue+=1
+# 		if kleur == 'yellow':
+# 			yellow+=1
+# 		if kleur == 'orange':
+# 			orange+=1
+# 		if kleur == 'purple':
+# 			purple+=1
+# 		if kleur == 'grey':
+# 			grey+=1
+# 		if kleur == 'black':
+# 			score=6666666
+# 			return score
 
-	kleuren = []
-	kleuren.append(red)
-	kleuren.append(green)
-	kleuren.append(blue)
-	kleuren.append(yellow)
-	kleuren.append(orange)
-	kleuren.append(purple)
-	kleuren.append(grey)
-	# print(kleuren)
-	bubbleSort(kleuren)
-	# print(kleuren)
-	score += kleuren[0]*12
-	score += kleuren[1]*26
-	score += kleuren[2]*27
-	score += kleuren[3]*30
-	score += kleuren[4]*37
-	score += kleuren[5]*39
-	score += kleuren[6]*41
-	return score
+# 	kleuren = []
+# 	kleuren.append(red)
+# 	kleuren.append(green)
+# 	kleuren.append(blue)
+# 	kleuren.append(yellow)
+# 	kleuren.append(orange)
+# 	kleuren.append(purple)
+# 	kleuren.append(grey)
+# 	# print(kleuren)
+# 	bubbleSort(kleuren)
+# 	# print(kleuren)
+# 	score += kleuren[0]*12
+# 	score += kleuren[1]*26
+# 	score += kleuren[2]*27
+# 	score += kleuren[3]*30
+# 	score += kleuren[4]*37
+# 	score += kleuren[5]*39
+# 	score += kleuren[6]*41
+# 	return score
 
-def scoreCounter2(G, colormap):
-	score = 0
-	red = 0
-	green = 0
-	blue = 0
-	yellow = 0
-	orange = 0
-	purple = 0
-	grey = 0
+# def scoreCounter2(G, colormap):
+# 	score = 0
+# 	red = 0
+# 	green = 0
+# 	blue = 0
+# 	yellow = 0
+# 	orange = 0
+# 	purple = 0
+# 	grey = 0
 
-	for kleur in colormap:
-		if kleur == 'red':
-			red+=1
-		if kleur == 'green':
-			green+=1
-		if kleur == 'blue':
-			blue+=1
-		if kleur == 'yellow':
-			yellow+=1
-		if kleur == 'orange':
-			orange+=1
-		if kleur == 'purple':
-			purple+=1
-		if kleur == 'grey':
-			grey+=1
-		if kleur == 'black':
-			score=6666666
-			return score
+# 	for kleur in colormap:
+# 		if kleur == 'red':
+# 			red+=1
+# 		if kleur == 'green':
+# 			green+=1
+# 		if kleur == 'blue':
+# 			blue+=1
+# 		if kleur == 'yellow':
+# 			yellow+=1
+# 		if kleur == 'orange':
+# 			orange+=1
+# 		if kleur == 'purple':
+# 			purple+=1
+# 		if kleur == 'grey':
+# 			grey+=1
+# 		if kleur == 'black':
+# 			score=6666666
+# 			return score
 
-	kleuren = []
-	kleuren.append(red)
-	kleuren.append(green)
-	kleuren.append(blue)
-	kleuren.append(yellow)
-	kleuren.append(orange)
-	kleuren.append(purple)
-	kleuren.append(grey)
-	# print(kleuren)
-	bubbleSort(kleuren)
-	# print(kleuren)
-	score += kleuren[0]*19
-	score += kleuren[1]*20
-	score += kleuren[2]*21
-	score += kleuren[3]*23
-	score += kleuren[4]*36
-	score += kleuren[5]*37
-	score += kleuren[6]*38
-	return score
+# 	kleuren = []
+# 	kleuren.append(red)
+# 	kleuren.append(green)
+# 	kleuren.append(blue)
+# 	kleuren.append(yellow)
+# 	kleuren.append(orange)
+# 	kleuren.append(purple)
+# 	kleuren.append(grey)
+# 	# print(kleuren)
+# 	bubbleSort(kleuren)
+# 	# print(kleuren)
+# 	score += kleuren[0]*19
+# 	score += kleuren[1]*20
+# 	score += kleuren[2]*21
+# 	score += kleuren[3]*23
+# 	score += kleuren[4]*36
+# 	score += kleuren[5]*37
+# 	score += kleuren[6]*38
+# 	return score
 
-def scoreCounter3(G, colormap):
-	score = 0
-	red = 0
-	green = 0
-	blue = 0
-	yellow = 0
-	orange = 0
-	purple = 0
-	grey = 0
+# def scoreCounter3(G, colormap):
+# 	score = 0
+# 	red = 0
+# 	green = 0
+# 	blue = 0
+# 	yellow = 0
+# 	orange = 0
+# 	purple = 0
+# 	grey = 0
 
-	for kleur in colormap:
-		if kleur == 'red':
-			red+=1
-		if kleur == 'green':
-			green+=1
-		if kleur == 'blue':
-			blue+=1
-		if kleur == 'yellow':
-			yellow+=1
-		if kleur == 'orange':
-			orange+=1
-		if kleur == 'purple':
-			purple+=1
-		if kleur == 'grey':
-			grey+=1
-		if kleur == 'black':
-			score=6666666
-			return score
+# 	for kleur in colormap:
+# 		if kleur == 'red':
+# 			red+=1
+# 		if kleur == 'green':
+# 			green+=1
+# 		if kleur == 'blue':
+# 			blue+=1
+# 		if kleur == 'yellow':
+# 			yellow+=1
+# 		if kleur == 'orange':
+# 			orange+=1
+# 		if kleur == 'purple':
+# 			purple+=1
+# 		if kleur == 'grey':
+# 			grey+=1
+# 		if kleur == 'black':
+# 			score=6666666
+# 			return score
 
-	kleuren = []
-	kleuren.append(red)
-	kleuren.append(green)
-	kleuren.append(blue)
-	kleuren.append(yellow)
-	kleuren.append(orange)
-	kleuren.append(purple)
-	kleuren.append(grey)
-	# print(kleuren)
-	bubbleSort(kleuren)
-	# print(kleuren)
-	score += kleuren[0]*16
-	score += kleuren[1]*17
-	score += kleuren[2]*31
-	score += kleuren[3]*33
-	score += kleuren[4]*36
-	score += kleuren[5]*56
-	score += kleuren[6]*57
-	return score
+# 	kleuren = []
+# 	kleuren.append(red)
+# 	kleuren.append(green)
+# 	kleuren.append(blue)
+# 	kleuren.append(yellow)
+# 	kleuren.append(orange)
+# 	kleuren.append(purple)
+# 	kleuren.append(grey)
+# 	# print(kleuren)
+# 	bubbleSort(kleuren)
+# 	# print(kleuren)
+# 	score += kleuren[0]*16
+# 	score += kleuren[1]*17
+# 	score += kleuren[2]*31
+# 	score += kleuren[3]*33
+# 	score += kleuren[4]*36
+# 	score += kleuren[5]*56
+# 	score += kleuren[6]*57
+# 	return score
 
-def scoreCounter4(G, colormap):
-	score = 0
-	red = 0
-	green = 0
-	blue = 0
-	yellow = 0
-	orange = 0
-	purple = 0
-	grey = 0
+# def scoreCounter4(G, colormap):
+# 	score = 0
+# 	red = 0
+# 	green = 0
+# 	blue = 0
+# 	yellow = 0
+# 	orange = 0
+# 	purple = 0
+# 	grey = 0
 
-	for kleur in colormap:
-		if kleur == 'red':
-			red+=1
-		if kleur == 'green':
-			green+=1
-		if kleur == 'blue':
-			blue+=1
-		if kleur == 'yellow':
-			yellow+=1
-		if kleur == 'orange':
-			orange+=1
-		if kleur == 'purple':
-			purple+=1
-		if kleur == 'grey':
-			grey+=1
-		if kleur == 'black':
-			score=6666666
-			return score
+# 	for kleur in colormap:
+# 		if kleur == 'red':
+# 			red+=1
+# 		if kleur == 'green':
+# 			green+=1
+# 		if kleur == 'blue':
+# 			blue+=1
+# 		if kleur == 'yellow':
+# 			yellow+=1
+# 		if kleur == 'orange':
+# 			orange+=1
+# 		if kleur == 'purple':
+# 			purple+=1
+# 		if kleur == 'grey':
+# 			grey+=1
+# 		if kleur == 'black':
+# 			score=6666666
+# 			return score
 
-	kleuren = []
-	kleuren.append(red)
-	kleuren.append(green)
-	kleuren.append(blue)
-	kleuren.append(yellow)
-	kleuren.append(orange)
-	kleuren.append(purple)
-	kleuren.append(grey)
-	# print(kleuren)
-	bubbleSort(kleuren)
-	# print(kleuren)
-	score += kleuren[0]*3
-	score += kleuren[1]*34
-	score += kleuren[2]*36
-	score += kleuren[3]*39
-	score += kleuren[4]*41
-	score += kleuren[5]*43
-	score += kleuren[6]*58
-	return score
+# 	kleuren = []
+# 	kleuren.append(red)
+# 	kleuren.append(green)
+# 	kleuren.append(blue)
+# 	kleuren.append(yellow)
+# 	kleuren.append(orange)
+# 	kleuren.append(purple)
+# 	kleuren.append(grey)
+# 	# print(kleuren)
+# 	bubbleSort(kleuren)
+# 	# print(kleuren)
+# 	score += kleuren[0]*3
+# 	score += kleuren[1]*34
+# 	score += kleuren[2]*36
+# 	score += kleuren[3]*39
+# 	score += kleuren[4]*41
+# 	score += kleuren[5]*43
+# 	score += kleuren[6]*58
+# 	return score
 
 #gaat een lijst bouwen van toegestane kleuren van de node
 def controleColor(G, province):
@@ -585,22 +672,6 @@ def random_node_list(G):
 	# return shuffled_nodes
 
 
-def sAnneal(G, colormapTemp, T, oude_score, new_score, i):
-
-
-	print("AAAA oude {}".format(oude_score))
-
-
-	print("AAAA new {}".format(new_score))
-
-	check = pow(math.e, ((new_score - oude_score) / T))
-	print("check is {}".format(check))
-	
-
-	check2 = random.uniform(0, 1)
-
-	if check > check2:
-		return 1
 
 
 if __name__ == '__main__':

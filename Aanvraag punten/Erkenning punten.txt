@@ -12,3 +12,16 @@ D: 0
 E: 0
 A: 0
 
+Erkenning IDEA punten na gesprek 14/11
+
+I: 0
+D: 0
+E: 1
+A: 1
+
+
+Totaal:
+I: 2
+D: 1
+E: 1
+A: 2

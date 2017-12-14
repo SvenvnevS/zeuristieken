@@ -6,7 +6,6 @@ import csv
 
 def random(file_a, file_b):
 	G = nx.Graph()
-	# H = nx.Graph()
 
 	# nodes neerzetten per provincie
 	with open(file_a, 'r') as csvfile:
