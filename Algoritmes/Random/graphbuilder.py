@@ -31,7 +31,7 @@ def main():
 	# lees de oude score uit file
 	
 	colormap = []
-	text = input("welke excel? score1.xls t/m score4.xls ")
+	text = input("welke excel? ")
 	book = xlrd.open_workbook(text)
 	sh = book.sheet_by_index(0)
 	best_score = sh.cell_value(rowx = 0, colx = 0)
