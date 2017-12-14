@@ -41,6 +41,6 @@ def dataWriter(G, destination, cost_table, tScore, algo):
 
 		ws.write(0,2, algo + " algoritme")
 		ws.write(0,1, tScore)
-		ws.write(0,0, "score table" + str(cost_table))
+		ws.write(0,0, cost_table+1)
 		wb.save(destination)
 

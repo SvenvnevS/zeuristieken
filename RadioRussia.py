@@ -37,7 +37,9 @@ def main():
 	if algo == 'random':
 		# show de random indeling
 		dataWriter(G, destination, cost_table, total_costs, algo)
+		title = land + " Score " + str(total_costs)
 		nx.draw_networkx(G, with_labels=True,node_color=colormap)
+		plt.title(title)
 		plt.show()
 
 	if algo == 'greedy':
@@ -47,8 +49,11 @@ def main():
 		total_costs, colormap = scoreCounter(G, cost_table)
 		dataWriter(G, destination, cost_table, total_costs, algo)
 
+		title = land + " Score " + str(total_costs)
 		nx.draw_networkx(G, with_labels=True,node_color=colormap)
+		plt.title(title)
 		plt.show()
+
 
 	if algo == 'hillclimber':
 		iter = int(input("how many iterations? "))
@@ -56,8 +61,11 @@ def main():
 		total_costs, colormap = scoreCounter(G, cost_table)
 		dataWriter(G, destination, cost_table, total_costs, algo)
 
+		title = land + " Score " + str(total_costs)
 		nx.draw_networkx(G, with_labels=True,node_color=colormap)
+		plt.title(title)
 		plt.show()
+
 
 if __name__ == '__main__':
 	main()	
