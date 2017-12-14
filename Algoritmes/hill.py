@@ -42,7 +42,7 @@ def randomSwap(G):
 
 
 # def hillclimber(G, colormap, scorefunctie, oude_score, i, loopA):
-def hillclimber(G, iterations, cost_schedule):
+def hillclimber(G, iterations, cost_schedule, land):
 	# roep een lijst aan met alle provincies in random volgorde
 	for iter in range(iterations):
 
@@ -107,7 +107,7 @@ def hillclimber(G, iterations, cost_schedule):
 		else:
 			G = old_G
 
-	excel_writer(alle_scores)
+	excel_writer(alle_scores, land)
 	print(beste_scores)
 
 	return G, old_S
@@ -129,7 +129,7 @@ def sAnneal(T, old_S, new_S):
 	if check > check2:
 		return 1
 
-def excel_writer(score_array):
+def excel_writer(score_array, land):
 
 	wb = xlwt.Workbook()
 	
@@ -139,8 +139,8 @@ def excel_writer(score_array):
 
 		ws.write(n, 0, n)
 		ws.write(n, 1, score_array[n])
-
-	wb.save("hill_climber_scores.xls")
+	destination = land + "/hill_climber_scores.xls"
+	wb.save(destination)
 
 
 

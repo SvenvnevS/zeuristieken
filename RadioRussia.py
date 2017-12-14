@@ -5,8 +5,7 @@ import matplotlib.pyplot as plt
 parent_dir_name = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 # print(parent_dir_name)
 sys.path.append(parent_dir_name + "/zeuristieken/")
-sys.path.append(parent_dir_name + "/zeuristieken/Algoritmes/")
-sys.path.append(parent_dir_name + "/zeuristieken/Algoritmes/Random")
+sys.path.append(parent_dir_name + "/zeuristieken/Algoritmes")
 
 
 from scorecalculator import scoreCounter
@@ -43,16 +42,17 @@ def main():
 
 	if algo == 'greedy':
 		iter = int(input("how many iterations? "))
-		# # draai hillclimber x aantal keer
+		# # draai greedy x aantal keer
 		G, score = greed(G, iter, cost_table)
 		total_costs, colormap = scoreCounter(G, cost_table)
 		dataWriter(G, destination, cost_table, total_costs, algo)
 
 		nx.draw_networkx(G, with_labels=True,node_color=colormap)
 		plt.show()
+
 	if algo == 'hillclimber':
 		iter = int(input("how many iterations? "))
-		G, score = hillclimber(G, iter, cost_table)
+		G, score = hillclimber(G, iter, cost_table, land)
 		total_costs, colormap = scoreCounter(G, cost_table)
 		dataWriter(G, destination, cost_table, total_costs, algo)
 
