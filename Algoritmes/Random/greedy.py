@@ -9,6 +9,7 @@ import xlrd
 import math
 from networkx.algorithms import bipartite
 from scorecalculator import scoreCounter
+from Random import controleColor
 
 def greed(G, iterations, cost_schedule):
 	colormap = []
@@ -54,42 +55,6 @@ def greedy(G, colormap, cost_schedule, maxScore):
 
 
 #gaat een lijst bouwen van toegestane kleuren van de node
-def controleColor(G, province):
-
-	kleuren = ""
-	colorsAvailable = []
-
-	# vraagt van een node de buren op
-	neighbors = G[province]
-
-
-	for neighbor in neighbors:
-
-		# vraag per provincie de huidige kleur op
-	 	colr=nx.get_node_attributes(G,'color')
-	 	
-
-	 	# vraag de kleuren op van de buren van een provincie
-	 	kleuren += (colr[neighbor])
-	 	
-	if 'grey' not in kleuren:
-		colorsAvailable.append('grey')
-	if 'red' not in kleuren:
-		colorsAvailable.append('red')
-	if 'green' not in kleuren:
-		colorsAvailable.append('green')
-	if 'blue' not in kleuren:
-		colorsAvailable.append('blue')
-	if 'yellow' not in kleuren:
-		colorsAvailable.append('yellow')
-	if 'orange' not in kleuren:
-		colorsAvailable.append('orange')
-	if 'purple' not in kleuren:
-		colorsAvailable.append('purple')
-	return colorsAvailable
-
-
-# geeft nu random kleur uit de lijst colorsAvailable
 
 
 def random_node_list(G):
