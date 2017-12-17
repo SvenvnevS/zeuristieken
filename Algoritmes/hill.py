@@ -20,10 +20,6 @@ beste_scores = [6666]
 alle_scores = []
 
 
-
-
-
-
 def randomSwap(G):
 
 	# pick a random node
@@ -48,8 +44,11 @@ def hillclimber(G, iterations, cost_schedule, land):
 	best_G = copy.deepcopy(G)
 	for iter in range(iterations):
 
-		# calculate current temperture
-		T = iterations - iter
+		# calculate lineair current temperture
+		# T = iterations - iter
+
+		# EXPONENTIAL
+		T = iterations * (0.995 ** (iter * 10))
 
 		# store the old state
 		old_G = copy.deepcopy(G)
