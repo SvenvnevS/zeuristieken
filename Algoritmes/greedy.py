@@ -7,11 +7,16 @@ import random
 import xlwt
 import xlrd
 import math
+
 from networkx.algorithms import bipartite
 from scorecalculator import scoreCounter
 from Random import controleColor
 
-def greed(G, iterations, cost_schedule):
+
+score_array = []
+
+def greed(G, iterations, cost_schedule, land):
+
 	colormap = []
 
 	# vraag de kleur op van een specifieke node
@@ -27,7 +32,11 @@ def greed(G, iterations, cost_schedule):
 	for i in range(loopA):
 		G = greedy(G, colormap, cost_schedule, tScore)
 		tScore, kutzooi = scoreCounter(G, cost_schedule)
+
+		score_array.append(tScore)
 		print("score ", tScore)
+
+	excel_writer_greedy(score_array, land)
 
 	return G, tScore
 # end of main
@@ -35,10 +44,10 @@ def greed(G, iterations, cost_schedule):
 def greedy(G, colormap, cost_schedule, maxScore):
 
 	# roep een lijst aan met alle provincies in random volgorde
-
 	random_nodes = random_node_list(G)
 	for node in random_nodes:
 		
+		# kijk voor die node welke kleuren er mogen veranderen
 		colorsAv = controleColor(G, node)
 		for colorAv in colorsAv:
 
@@ -53,9 +62,7 @@ def greedy(G, colormap, cost_schedule, maxScore):
 			color = nx.get_node_attributes(G,'color')
 	return G
 
-
 #gaat een lijst bouwen van toegestane kleuren van de node
-
 
 def random_node_list(G):
 
@@ -72,3 +79,16 @@ def random_node_list(G):
 		list_2.append(rannie)
 		list_1.remove(rannie)
 	return(list_2)
+
+def excel_writer_greedy(score_array, land):
+
+	wb = xlwt.Workbook()
+	
+	ws = wb.add_sheet("Scores")
+
+	for n in range(len(score_array)):
+
+		ws.write(n, 0, n)
+		ws.write(n, 1, score_array[n])
+	destination = land + "/greedy_scores.xls"
+	wb.save(destination)

@@ -40,16 +40,17 @@ def randomSwap(G):
 # def hillclimber(G, colormap, scorefunctie, oude_score, i, loopA):
 def hillclimber(G, iterations, cost_schedule, land):
 	# roep een lijst aan met alle provincies in random volgorde
-
+	# for i in range (10):
 	best_G = copy.deepcopy(G)
 	for iter in range(iterations):
 
 		# calculate lineair current temperture
 		# T = iterations - iter
-
+		
 		# EXPONENTIAL
-		T = iterations * (0.995 ** (iter * 10))
-
+		T = iterations * (0.995 ** (iter * 30))
+		# print("LINEAIR {}" .format(T))
+		# print("EXPONENTIEEL {}" .format(T2))
 		# store the old state
 		old_G = copy.deepcopy(G)
 
@@ -82,7 +83,7 @@ def hillclimber(G, iterations, cost_schedule, land):
 
 		elif sAnneal(T, old_S, new_S) == 1:
 			alle_scores.append(new_S)
-
+ 
 			print("ANEEALING DONEEEE")
 			old_S = new_S
 			old_G = G
@@ -100,12 +101,12 @@ def hillclimber(G, iterations, cost_schedule, land):
 def sAnneal(T, old_S, new_S):
 
 	# print("JAAHAA")
-	# print("T is {} " .format(T))
+	print("T is {} " .format(T))
 	print ("old score is {}" .format(old_S))
-		# print (new_S)
+	print ("new score is {}" .format(new_S))
 
 
-	check = math.e ** ((new_S - old_S) / T)
+	check = math.e ** (-(new_S - old_S) / T)
 	print("check is {}".format(check))
 
 	check2 = random.uniform(0, 1)
@@ -125,12 +126,6 @@ def excel_writer(score_array, land):
 		ws.write(n, 1, score_array[n])
 	destination = land + "/hill_climber_scores.xls"
 	wb.save(destination)
-
-
-
-
-
-
 	
 
 def random_node_list(G):

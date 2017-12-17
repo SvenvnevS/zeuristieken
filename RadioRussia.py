@@ -45,7 +45,7 @@ def main():
 	if algo == 'greedy':
 		iter = int(input("how many iterations? "))
 		# # draai greedy x aantal keer
-		G, score = greed(G, iter, cost_table)
+		G, score = greed(G, iter, cost_table, land)
 		total_costs, colormap = scoreCounter(G, cost_table)
 		dataWriter(G, destination, cost_table, total_costs, algo)
 
