@@ -41,6 +41,7 @@ def randomSwap(G):
 def hillclimber(G, iterations, cost_schedule, land, ws, hill_i):
 	# roep een lijst aan met alle provincies in random volgorde
 	# for i in range (10):
+	print(hill_i)
 	best_G = copy.deepcopy(G)
 	
 	alle_scores = []
@@ -50,7 +51,7 @@ def hillclimber(G, iterations, cost_schedule, land, ws, hill_i):
 		# T = iterations - iter
 		
 		# EXPONENTIAL
-		T = iterations * (0.995 ** (iter * 30))
+		T = iterations * (0.995 ** (iter * 20))
 		# print("LINEAIR {}" .format(T))
 		# print("EXPONENTIEEL {}" .format(T2))
 		# store the old state
@@ -76,7 +77,7 @@ def hillclimber(G, iterations, cost_schedule, land, ws, hill_i):
 				beste_scores.sort()
 				best_G = copy.deepcopy(G)
 
-			print(new_S)
+			# print(new_S)
 			old_S = new_S
 			old_G = G
 
@@ -86,7 +87,7 @@ def hillclimber(G, iterations, cost_schedule, land, ws, hill_i):
 		elif sAnneal(T, old_S, new_S) == 1:
 			alle_scores.append(new_S)
  
-			print("ANEEALING DONEEEE")
+			# print("ANEEALING DONEEEE")
 			old_S = new_S
 			old_G = G
 
@@ -95,7 +96,7 @@ def hillclimber(G, iterations, cost_schedule, land, ws, hill_i):
 			G = old_G
 
 	excel_writer(alle_scores, land, ws, hill_i, iterations)
-	print(beste_scores)
+	# print(beste_scores)
 
 	return best_G, old_S
 
@@ -103,13 +104,13 @@ def hillclimber(G, iterations, cost_schedule, land, ws, hill_i):
 def sAnneal(T, old_S, new_S):
 
 	# print("JAAHAA")
-	print("T is {} " .format(T))
-	print ("old score is {}" .format(old_S))
-	print ("new score is {}" .format(new_S))
+	# print("T is {} " .format(T))
+	# print ("old score is {}" .format(old_S))
+	# print ("new score is {}" .format(new_S))
 
 
 	check = math.e ** (-(new_S - old_S) / T)
-	print("check is {}".format(check))
+	# print("check is {}".format(check))
 
 	check2 = random.uniform(0, 1)
 
@@ -121,8 +122,8 @@ def excel_writer(score_array, land, ws, hill_i, iter):
 
 	for n in range(len(score_array)):
 
-		ws.write(n, hill_i*2, n)
-		ws.write(n, hill_i*2+1, score_array[n])
+		# ws.write(n, hill_i*2, n)
+		ws.write(n, hill_i+1, score_array[n])
 
 def random_node_list(G):
 
