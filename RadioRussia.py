@@ -53,13 +53,15 @@ def main():
 		ws = wb.add_sheet("Scores", cell_overwrite_ok=True)
 		for greed_i in range(greed_nr):
 			G, score = greed(G, iter, cost_table, land, ws, greed_i)
+			total_costs, colormap = scoreCounter(G, cost_table)
+			dataWriter(G, destination, cost_table, total_costs, algo)
 			G = rand(G)
-		total_costs, colormap = scoreCounter(G, cost_table)
-		dataWriter(G, destination, cost_table, total_costs, algo)
 
-		destination = land + "/greedy_scores.xls"
-		wb.save(destination)
+		
 
+		destin = land + "/greedy_scores.xls"
+		wb.save(destin)
+		
 
 	if algo == 'hillclimber':
 		hill_nr = int(input("how many times do you want to run the hillclimber? "))
@@ -69,13 +71,12 @@ def main():
 		ws = wb.add_sheet("Scores", cell_overwrite_ok=True)
 		for hill_i in range(hill_nr):
 			G, score = hillclimber(G, iter, cost_table, land, ws, hill_i)
+			total_costs, colormap = scoreCounter(G, cost_table)
+			dataWriter(G, destination, cost_table, total_costs, algo)
 			G = rand(G)
-		total_costs, colormap = scoreCounter(G, cost_table)
-		dataWriter(G, destination, cost_table, total_costs, algo)
 
-		destination = land + "/hill_climber_scores.xls"
-		wb.save(destination)
-
-
+		destin = land + "/hill_climber_scores.xls"
+		wb.save(destin)
+		
 if __name__ == '__main__':
 	main()	
