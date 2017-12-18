@@ -31,7 +31,7 @@ def greed(G, iterations, cost_schedule, land):
 	loopA = iterations
 	for i in range(loopA):
 		G = greedy(G, colormap, cost_schedule, tScore)
-		tScore, kutzooi = scoreCounter(G, cost_schedule)
+		tScore, Temp = scoreCounter(G, cost_schedule)
 
 		score_array.append(tScore)
 		print("score ", tScore)
