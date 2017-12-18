@@ -20,11 +20,11 @@ Benodigheden om dit het programma te kunnen gebruiken(druk op link hierboven voo
 + Python3
   +   [Download hier de versie 3.+](https://www.python.org/downloads/windows)
     Make sure you have the following modules, all of them are supplied by pip (pip install <package>)
-       + matplotlib
+       + [matplotlib](https://matplotlib.org/)
        + networkx [documuntation for install](https://networkx.github.io/documentation/stable/install.html)
-       + xlwt
-       + xlrd
-       + numpy
+       + [xlwt](https://pypi.python.org/pypi/xlwt)
+       + [xlrd](https://pypi.python.org/pypi/xlrd)
+       + [numpy](http://www.numpy.org/)
 
 ## Beginnen
 
