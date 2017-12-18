@@ -74,10 +74,6 @@ def main():
 		title = land + " Score " + str(total_costs)
 
 
-		# nx.draw_networkx(G, with_labels=True,node_color=colormap)
-		# plt.title(title)
-		# plt.show()
-
 
 if __name__ == '__main__':
 	main()	
