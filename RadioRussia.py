@@ -1,6 +1,8 @@
 import os, sys
 import networkx as nx
 import matplotlib.pyplot as plt
+import xlwt
+import xlrd
 
 parent_dir_name = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 # print(parent_dir_name)
@@ -27,7 +29,7 @@ def main():
 	G = dataLoader(nodescsv, edgescsv)
 	G = rand(G)
 	
-	cost_table = int(input("welke kosten tabel? 1 t/m 4 "))-1
+	cost_table = int(input("welke kofsten tabel? 1 t/m 4 "))-1
 
 	# bereken de score
 	total_costs, colormap = scoreCounter(G, cost_table)
@@ -56,15 +58,25 @@ def main():
 
 
 	if algo == 'hillclimber':
+		hill_nr = int(input("how many times do you want to run the hillclimber? "))
 		iter = int(input("how many iterations? "))
-		G, score = hillclimber(G, iter, cost_table, land)
+		wb = xlwt.Workbook()
+	
+		ws = wb.add_sheet("Scores", cell_overwrite_ok=True)
+		for hill_i in range(hill_nr):
+			G, score = hillclimber(G, iter, cost_table, land, ws, hill_i)
 		total_costs, colormap = scoreCounter(G, cost_table)
 		dataWriter(G, destination, cost_table, total_costs, algo)
 
+		destination = land + "/hill_climber_scores.xls"
+		wb.save(destination)
+
 		title = land + " Score " + str(total_costs)
-		nx.draw_networkx(G, with_labels=True,node_color=colormap)
-		plt.title(title)
-		plt.show()
+
+
+		# nx.draw_networkx(G, with_labels=True,node_color=colormap)
+		# plt.title(title)
+		# plt.show()
 
 
 if __name__ == '__main__':

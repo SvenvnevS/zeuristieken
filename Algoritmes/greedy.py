@@ -60,7 +60,7 @@ def greedy(G, colormap, cost_schedule, maxScore):
 				G.nodes[node]['color'] = 'black'
 
 			color = nx.get_node_attributes(G,'color')
-	return G
+			return G
 
 #gaat een lijst bouwen van toegestane kleuren van de node
 

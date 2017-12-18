@@ -38,10 +38,12 @@ def randomSwap(G):
 
 
 # def hillclimber(G, colormap, scorefunctie, oude_score, i, loopA):
-def hillclimber(G, iterations, cost_schedule, land):
+def hillclimber(G, iterations, cost_schedule, land, ws, hill_i):
 	# roep een lijst aan met alle provincies in random volgorde
 	# for i in range (10):
 	best_G = copy.deepcopy(G)
+	
+	alle_scores = []
 	for iter in range(iterations):
 
 		# calculate lineair current temperture
@@ -92,7 +94,7 @@ def hillclimber(G, iterations, cost_schedule, land):
 		else:
 			G = old_G
 
-	excel_writer(alle_scores, land)
+	excel_writer(alle_scores, land, ws, hill_i, iterations)
 	print(beste_scores)
 
 	return best_G, old_S
@@ -114,19 +116,13 @@ def sAnneal(T, old_S, new_S):
 	if check > check2:
 		return 1
 
-def excel_writer(score_array, land):
+def excel_writer(score_array, land, ws, hill_i, iter):
 
-	wb = xlwt.Workbook()
-	
-	ws = wb.add_sheet("Scores")
 
 	for n in range(len(score_array)):
 
-		ws.write(n, 0, n)
-		ws.write(n, 1, score_array[n])
-	destination = land + "/hill_climber_scores.xls"
-	wb.save(destination)
-	
+		ws.write(n, hill_i*2, n)
+		ws.write(n, hill_i*2+1, score_array[n])
 
 def random_node_list(G):
 
