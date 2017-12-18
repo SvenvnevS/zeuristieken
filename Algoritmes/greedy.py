@@ -15,9 +15,10 @@ from Random import controleColor
 
 score_array = []
 
-def greed(G, iterations, cost_schedule, land):
+def greed(G, iterations, cost_schedule, land, ws, greed_i):
 
 	colormap = []
+	score_array = []
 
 	# vraag de kleur op van een specifieke node
 	color = nx.get_node_attributes(G,'color')
@@ -36,7 +37,7 @@ def greed(G, iterations, cost_schedule, land):
 		score_array.append(tScore)
 		print("score ", tScore)
 
-	excel_writer_greedy(score_array, land)
+	excel_writer_greedy(score_array, land, greed_i, ws)
 
 	return G, tScore
 # end of main
@@ -60,7 +61,7 @@ def greedy(G, colormap, cost_schedule, maxScore):
 				G.nodes[node]['color'] = 'black'
 
 			color = nx.get_node_attributes(G,'color')
-			return G
+	return G
 
 #gaat een lijst bouwen van toegestane kleuren van de node
 
@@ -80,15 +81,7 @@ def random_node_list(G):
 		list_1.remove(rannie)
 	return(list_2)
 
-def excel_writer_greedy(score_array, land):
-
-	wb = xlwt.Workbook()
-	
-	ws = wb.add_sheet("Scores")
+def excel_writer_greedy(score_array, land, greed_i, ws):
 
 	for n in range(len(score_array)):
-
-		ws.write(n, 0, n)
-		ws.write(n, 1, score_array[n])
-	destination = land + "/greedy_scores.xls"
-	wb.save(destination)
+		ws.write(n, greed_i, score_array[n])

@@ -29,7 +29,7 @@ def main():
 	G = dataLoader(nodescsv, edgescsv)
 	G = rand(G)
 	
-	cost_table = int(input("welke kofsten tabel? 1 t/m 4 "))-1
+	cost_table = int(input("welke kosten tabel? 1 t/m 4 "))-1
 
 	# bereken de score
 	total_costs, colormap = scoreCounter(G, cost_table)
@@ -44,17 +44,21 @@ def main():
 		plt.title(title)
 		plt.show()
 
+
 	if algo == 'greedy':
+		greed_nr = int(input("how many times do you want to run greedy? "))
 		iter = int(input("how many iterations? "))
-		# # draai greedy x aantal keer
-		G, score = greed(G, iter, cost_table, land)
+		wb = xlwt.Workbook()
+	
+		ws = wb.add_sheet("Scores", cell_overwrite_ok=True)
+		for greed_i in range(greed_nr):
+			G, score = greed(G, iter, cost_table, land, ws, greed_i)
+			G = rand(G)
 		total_costs, colormap = scoreCounter(G, cost_table)
 		dataWriter(G, destination, cost_table, total_costs, algo)
 
-		title = land + " Score " + str(total_costs)
-		nx.draw_networkx(G, with_labels=True,node_color=colormap)
-		plt.title(title)
-		plt.show()
+		destination = land + "/greedy_scores.xls"
+		wb.save(destination)
 
 
 	if algo == 'hillclimber':
@@ -65,14 +69,12 @@ def main():
 		ws = wb.add_sheet("Scores", cell_overwrite_ok=True)
 		for hill_i in range(hill_nr):
 			G, score = hillclimber(G, iter, cost_table, land, ws, hill_i)
+			G = rand(G)
 		total_costs, colormap = scoreCounter(G, cost_table)
 		dataWriter(G, destination, cost_table, total_costs, algo)
 
 		destination = land + "/hill_climber_scores.xls"
 		wb.save(destination)
-
-		title = land + " Score " + str(total_costs)
-
 
 
 if __name__ == '__main__':

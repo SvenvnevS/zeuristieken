@@ -100,7 +100,6 @@ def sAnneal(T, old_S, new_S):
 
 
 	check = math.e ** (-(new_S - old_S) / T)
-	# print("check is {}".format(check))
 
 	check2 = random.uniform(0, 1)
 
@@ -127,7 +126,6 @@ def random_node_list(G):
 		rannie = random.choice(list_1)
 		list_2.append(rannie)
 		list_1.remove(rannie)
-	# print(list_2)
 	return list_2
 
 

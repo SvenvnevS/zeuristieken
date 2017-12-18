@@ -17,9 +17,7 @@ from scorecalculator import scoreCounter
 
 
 G = nx.Graph()
-# nodes neerzetten per provincie
 land = input("welk land wil je plotten? (RUSSIA/UKRAINE/USA) ")
-# land = "USA"
 destination = land + "/hiScore.xls"
 edgescsv = land + "/edges.csv"
 book = xlrd.open_workbook(destination)
