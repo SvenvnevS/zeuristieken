@@ -14,9 +14,9 @@ Er zijn precies zeven typen zendmasten beschikbaar, voor het moment bekend als t
 Voor een goede verdeling is het noodzakelijk dat twee aangrenzende provincies niet dezelfde zendertypes hebben.
 Omdat wisundigen van de russische overheid de details van de optimale oplossing niet precies kennen hebben ze ook wat kaarten van kleinere landen ter hand genomen, in de hoop het probleem wat beter te gaan begrijpen.
 
-### Benodigheden
+### [Benodigheden](https://github.com/SvenvBoven/zeuristieken/blob/master/requirements.txt)
 
-Benodigheden om dit het programma te kunnen gebruiken
+Benodigheden om dit het programma te kunnen gebruiken(druk op link hierboven voor versies)
 + Python3
   +   [Download hier de versie 3.+](https://www.python.org/downloads/windows)
     Make sure you have the following modules, all of them are supplied by pip (pip install <package>)
